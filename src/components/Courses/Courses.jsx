@@ -1,34 +1,37 @@
 import { useState } from 'react';
 import { mockedAuthorsList, mockedCoursesList } from '../../constants';
 import CourseCard from './components/CourseCard/CourseCard';
+import SearchBar from './components/SearchBar/SearchBar';
+import { getAuthors } from '../../helpers/getAuthors';
 
 export default function Courses(props) {
 	const [coursesList, setCoursesList] = useState(mockedCoursesList);
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
+	const [searchQuery, setSearchQuery] = useState('');
+	const filteredCourses = filterCourses(coursesList, searchQuery);
 
-	console.log(coursesList);
-	console.log(mockedAuthorsList);
-	console.log(authorsList);
-
-	function getAuthors(authorsIds) {
-		let authors = [];
-		for (let authorId of authorsIds) {
-			for (let author of authorsList) {
-				if (author.id === authorId) authors.push(author.name);
-			}
+	function filterCourses(courses, query) {
+		if (!query) {
+			return courses;
 		}
-		return authors.join(', ');
+
+		return courses.filter((course) => {
+			const courseName = course.title.toLowerCase();
+			const courseId = course.id.toLowerCase();
+			return courseName.includes(query) || courseId.includes(query);
+		});
 	}
 
 	return (
 		<>
 			<div>
-				{coursesList.map((course) => (
+				<SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+				{filteredCourses.map((course) => (
 					<CourseCard
 						key={course.id}
 						title={course.title}
 						description={course.description}
-						authors={getAuthors(course.authors)}
+						authors={getAuthors(course.authors, authorsList)}
 						duration={course.duration}
 						creationDate={course.creationDate}
 					/>

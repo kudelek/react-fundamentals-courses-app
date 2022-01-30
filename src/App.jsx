@@ -5,7 +5,6 @@ import Courses from './components/Courses/Courses';
 function App() {
 	return (
 		<div className='App'>
-			React
 			<Header />
 			<Courses />
 		</div>

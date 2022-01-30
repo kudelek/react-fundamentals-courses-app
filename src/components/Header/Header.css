@@ -3,14 +3,12 @@ header {
     height: fit-content;
     display: flex;
     flex-flow: row nowrap;
-    border: 1px solid red;
     padding: 5px;
 }
 
 .left {
     display: flex;
     align-items: center;
-    border: 1px solid green;
     margin: 5px;
 }
 
@@ -18,7 +16,6 @@ header {
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    border: 1px solid black;
     margin: 5px;
     align-items: center;
 }
