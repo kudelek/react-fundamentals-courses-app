@@ -1,0 +1,52 @@
+.course-card {
+    border: 1px solid black;
+    height: fit-content;
+    margin-top: 1em;
+    padding: 1.5em;
+    display: flex;
+    flex-direction: row nowrap;
+}
+
+.content {
+    width: 70%;
+}
+
+.content-title {
+    font-weight: bold;
+    margin: 0 0 1em ;
+}
+
+.info {
+    width: 30%;
+    display: flex;
+    flex-flow: column;
+}
+
+.info-item {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0.3em
+}
+
+.info-title {
+    font-weight: bold;
+    padding-right: 0.3em;
+}
+
+.info-content {
+    display: inline;
+}
+
+.info-button {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
+}
+
+.show-course-button {
+    width: fit-content;
+    align-self: center;
+    padding: 5px
+}
