@@ -3,7 +3,7 @@ import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
 import './SearchBar.css';
 
-export default function SearchBar({ searchQuery, setSearchQuery }) {
+export default function SearchBar({ setSearchQuery }) {
 	const [searchInput, setSearchInput] = useState('');
 
 	function handleChange(v) {
@@ -11,7 +11,7 @@ export default function SearchBar({ searchQuery, setSearchQuery }) {
 		if (searchInput === '') setSearchQuery('');
 	}
 
-	function handleClick(props) {
+	function handleClick() {
 		setSearchQuery(searchInput);
 	}
 
@@ -25,9 +25,7 @@ export default function SearchBar({ searchQuery, setSearchQuery }) {
 			<Input
 				className='search-input'
 				labelText='Search for courses: '
-				placeholderText={
-					searchInput === '' ? 'Enter course name...' : searchInput
-				}
+				placeholderText='Enter course name...'
 				onInput={(e) =>
 					e.target.value === '' ? resetInput() : handleChange(e.target.value)
 				}

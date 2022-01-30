@@ -1,7 +1,5 @@
 .search-bar {
-    margin: 1em;
-    width: 100%;
+    min-width: 40%;
     display: flex;
     flex-flow: row;
-    ;
 }
