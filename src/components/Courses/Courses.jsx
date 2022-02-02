@@ -22,7 +22,10 @@ export default function Courses(props) {
 		return courses.filter((course) => {
 			const courseName = course.title.toLowerCase();
 			const courseId = course.id.toLowerCase();
-			return courseName.includes(query) || courseId.includes(query);
+			return (
+				courseName.includes(query.toLowerCase()) ||
+				courseId.includes(query.toLowerCase())
+			);
 		});
 	}
 
