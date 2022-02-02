@@ -30,6 +30,7 @@ export default function SearchBar({ setSearchQuery }) {
 					e.target.value === '' ? resetInput() : handleChange(e.target.value)
 				}
 				value={searchInput}
+				id='search-input'
 			/>
 			<Button
 				className='search-button'
