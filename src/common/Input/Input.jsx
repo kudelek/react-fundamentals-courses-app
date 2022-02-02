@@ -1,18 +1,13 @@
 import './Input.css';
 
 export default function Input(props) {
+	const { className, id, labelText, ...rest } = props;
 	return (
-		<div className={props.className}>
-			<label className='visually-hidden' htmlFor={props.id}>
-				{props.labelText}
+		<div className={className}>
+			<label className='visually-hidden' htmlFor={id}>
+				{labelText}
 			</label>
-			<input
-				id={props.id}
-				placeholder={props.placeholderText}
-				onChange={props.onChange}
-				onInput={props.onInput}
-				value={props.value}
-			/>
+			<input id={id} {...rest} />
 		</div>
 	);
 }
