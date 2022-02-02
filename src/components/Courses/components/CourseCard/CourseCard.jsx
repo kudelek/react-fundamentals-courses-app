@@ -1,4 +1,4 @@
-import Button from '../../../../common/Button/Button';
+import { Button } from '../../../../common/Button/Button';
 import './CourseCard.css';
 import { getDuration } from '../../../../helpers/pipeDuration';
 import { dateGenerator } from '../../../../helpers/dateGenerator';

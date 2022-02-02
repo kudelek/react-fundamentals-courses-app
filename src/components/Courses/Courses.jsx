@@ -3,7 +3,7 @@ import { mockedAuthorsList, mockedCoursesList } from '../../constants';
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import { getAuthors } from '../../helpers/getAuthors';
-import Button from '../../common/Button/Button';
+import { Button } from '../../common/Button/Button';
 import './Courses.css';
 
 export default function Courses(props) {

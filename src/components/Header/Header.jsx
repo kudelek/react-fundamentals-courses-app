@@ -1,5 +1,5 @@
 import Logo from './components/Logo/Logo';
-import Button from '../../common/Button/Button';
+import { Button } from '../../common/Button/Button';
 import './Header.css';
 import { useState } from 'react';
 
