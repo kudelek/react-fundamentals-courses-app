@@ -13,6 +13,12 @@ export default function CourseCard(props) {
 		);
 	}
 
+	const courseInfo = [
+		['Authors: ', props.authors],
+		['Duration: ', getDuration(props.duration)],
+		['Created: ', dateGenerator(props.creationDate)],
+	];
+
 	return (
 		<section className='course-card' id={props.id}>
 			<div className='content'>
@@ -21,15 +27,9 @@ export default function CourseCard(props) {
 			</div>
 			<div className='info'>
 				<div className='info-list'>
-					<Info infoTitle='Authors: ' infoContent={props.authors} />
-					<Info
-						infoTitle='Duration: '
-						infoContent={getDuration(props.duration)}
-					/>
-					<Info
-						infoTitle='Created: '
-						infoContent={dateGenerator(props.creationDate)}
-					/>
+					{courseInfo.map(([title, content]) => (
+						<Info key={title} infoTitle={title} infoContent={content} />
+					))}
 				</div>
 				<div className='info-button'>
 					<Button

@@ -8,7 +8,7 @@ export default function SearchBar({ setSearchQuery }) {
 
 	function handleChange(value) {
 		setSearchInput(value);
-		if (value === '') setSearchQuery('');
+		if (!value) setSearchQuery('');
 	}
 
 	function handleClick() {
