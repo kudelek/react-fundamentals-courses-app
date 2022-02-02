@@ -7,7 +7,9 @@ import { Button } from '../../common/Button/Button';
 import './Courses.css';
 
 export default function Courses(props) {
+	// eslint-disable-next-line no-unused-vars
 	const [coursesList, setCoursesList] = useState(mockedCoursesList);
+	// eslint-disable-next-line no-unused-vars
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 	const [searchQuery, setSearchQuery] = useState('');
 	const filteredCourses = filterCourses(coursesList, searchQuery);

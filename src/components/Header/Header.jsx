@@ -4,6 +4,7 @@ import './Header.css';
 import { useState } from 'react';
 
 export default function Header() {
+	// eslint-disable-next-line no-unused-vars
 	const [userName, setUserName] = useState('defaultUserName');
 	return (
 		<header>
