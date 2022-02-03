@@ -84,6 +84,7 @@ export default function CreateCourse({
 			<form>
 				<div>
 					<Input
+						id='course-title-input'
 						value={courseTitle}
 						onInput={(e) => setCourseTitle(e.target.value)}
 						className='title-input'
@@ -109,6 +110,7 @@ export default function CreateCourse({
 					<div>
 						<h2>Add author</h2>
 						<Input
+							id='create-author-input'
 							value={authorToBeCreated}
 							onInput={(e) => setauthorToBeCreated(e.target.value)}
 							placeholder='Enter author name...'
@@ -120,6 +122,7 @@ export default function CreateCourse({
 						<></>
 						<h2>Duration</h2>
 						<Input
+							id='course-duration-input'
 							value={courseDuration}
 							onInput={(e) => setCourseDuration(getDuration(e.target.value))}
 							placeholder='Enter duration in minutes...'
