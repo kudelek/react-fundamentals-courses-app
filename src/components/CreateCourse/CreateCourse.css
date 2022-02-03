@@ -5,11 +5,16 @@
     margin: 1em;
 }
 
-.title-input {
+.course-title-input {
     display: flex;
     flex-flow: column nowrap;
     height: fit-content;
     justify-self: flex-start;
+    margin-left: 0;
+}
+
+.course-title-input-label {
+    margin: 0;
 }
 
 .create-course {
@@ -18,10 +23,21 @@
     width: 100%;
 }
 
+.create-course-button {
+    height: fit-content;
+    padding: 0.5em;
+    margin: 2em;
+    width: 15em;
+}
+
 .description {
     display: flex;
     flex-flow: column;
     margin: 1em;
+}
+
+.description-label {
+    padding: 0.5em;
 }
 
 .description-textarea {
@@ -41,15 +57,10 @@
 
 .create-author {
     margin: 1em;
-}
-
-.create-author-label {
-    height: 1em;
-    width: 5em;
+    text-align: left;
 }
 
 .create-author-input {
-    margin: 1em;
     width: 90%;
 }
 
@@ -59,10 +70,10 @@
 
 .course-duration {
     margin: 1em;
+    text-align: left;
 }
 
 .course-duration-input {
-    margin: 1em;
     width: 90%;
 }
 

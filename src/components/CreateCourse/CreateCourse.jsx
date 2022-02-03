@@ -21,9 +21,6 @@ export default function CreateCourse({
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
 	const [_authorsList, _setAuthorsList] = useState(authorsList);
 
-	// TO DO: ADD VALIDATION
-	// TO DO: MAKE FIELDS REQUIRED
-
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
 		for (let author of courseAuthorsList)
@@ -103,11 +100,11 @@ export default function CreateCourse({
 				<div className='title-and-create'>
 					<Input
 						id='course-title-input'
-						className='title-input'
+						className='course-title'
 						value={courseTitle}
 						onInput={(e) => setCourseTitle(e.target.value)}
 						placeholder='Enter title...'
-						labelClassName='title-input-label'
+						labelClassName='course-title-input-label'
 						labelText='Title'
 						required
 					/>
@@ -136,11 +133,12 @@ export default function CreateCourse({
 						<h2>Add author</h2>
 						<Input
 							id='create-author-input'
-							labelClassName='create-author-label'
 							className='create-author'
 							value={authorToBeCreated}
 							onInput={(e) => setAuthorToBeCreated(e.target.value)}
 							placeholder='Enter author name...'
+							labelClassName='create-author-input-label'
+							labelText='Author name'
 						/>
 						<Button
 							className='create-author-button'
@@ -152,11 +150,12 @@ export default function CreateCourse({
 						<Input
 							id='course-duration-input'
 							className='course-duration'
-							labelClassName='course-duration-label'
+							labelClassName='course-duration-input-label'
 							value={courseDuration}
 							onInput={(e) => setCourseDuration(e.target.value)}
 							placeholder='Enter duration in minutes...'
 							type='number'
+							labelText='Duration'
 							required
 						/>
 						<div className='course-duration-display'>
