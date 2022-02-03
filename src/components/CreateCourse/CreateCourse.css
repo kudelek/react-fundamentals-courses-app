@@ -1,1 +1,100 @@
-/* TO DO: STYLING */
+.title-and-create {
+    display: flex;
+    flex-flow: row nowrap;
+    height: fit-content;
+    margin: 1em;
+}
+
+.title-input {
+    display: flex;
+    flex-flow: column nowrap;
+    height: fit-content;
+    justify-self: flex-start;
+}
+
+.create-course {
+    display: flex;
+    flex-flow: row-reverse;
+    width: 100%;
+}
+
+.description {
+    display: flex;
+    flex-flow: column;
+    margin: 1em;
+}
+
+.description-textarea {
+    min-height: 5em;
+    padding: 0.5em;
+}
+
+.course-info {
+    display: flex;
+    flex-flow: row;
+}
+
+.create-author-and-duration {
+    width: 50%;
+    text-align: center;
+}
+
+.create-author {
+    margin: 1em;
+}
+
+.create-author-label {
+    height: 1em;
+    width: 5em;
+}
+
+.create-author-input {
+    margin: 1em;
+    width: 90%;
+}
+
+.create-author-button {
+    height: 2em;
+}
+
+.course-duration {
+    margin: 1em;
+}
+
+.course-duration-input {
+    margin: 1em;
+    width: 90%;
+}
+
+.course-duration-display {
+    width: 100%;
+    text-align: left;
+    margin: 1em;
+    margin-left: 2em;
+}
+
+.course-duration-display span {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.course-authors-lists {
+    width: 50%;
+    text-align: center;
+}
+
+.course-authors-add {
+    display: flex;
+    flex-flow: row;
+    margin: 0.5em;
+    height: 1.5em;
+}
+
+.course-author-name {
+    text-align: left;
+    width: 50%;
+}
+
+.course-author-button {
+    width: 30%;
+}

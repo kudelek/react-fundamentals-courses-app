@@ -7,7 +7,7 @@ export default function Input(props) {
 			<label className={labelClassName || 'visually-hidden'} htmlFor={id}>
 				{labelText}
 			</label>
-			<input id={id} {...rest} />
+			<input id={id} className={id} {...rest} />
 		</div>
 	);
 }

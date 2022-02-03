@@ -1,11 +1,11 @@
-import Logo from './components/Logo/Logo';
+import { Logo } from './components/Logo/Logo';
 import { Button } from '../../common/Button/Button';
 import './Header.css';
 import { useState } from 'react';
 
 export default function Header() {
 	// eslint-disable-next-line no-unused-vars
-	const [userName, setUserName] = useState('defaultUserName');
+	const [userName, setUserName] = useState('someUserName');
 	return (
 		<header>
 			<div className='left'>
