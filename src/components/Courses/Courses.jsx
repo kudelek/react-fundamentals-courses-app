@@ -45,32 +45,32 @@ export default function Courses(props) {
 					setCoursesList={setCoursesList}
 				/>
 			) : (
-				filteredCourses.map((course) => (
-					<>
-						<div className='search-and-add-bar'>
-							<SearchBar
-								searchQuery={searchQuery}
-								setSearchQuery={setSearchQuery}
+				<>
+					<div className='search-and-add-bar'>
+						<SearchBar
+							searchQuery={searchQuery}
+							setSearchQuery={setSearchQuery}
+						/>
+						<div className='add'>
+							<Button
+								buttonText='Add new course'
+								className='add-button'
+								onClick={() => setCreateCourseMode(true)}
 							/>
-							<div className='add'>
-								<Button
-									buttonText='Add new course'
-									className='add-button'
-									onClick={() => setCreateCourseMode(true)}
-								/>
-							</div>
 						</div>
-
+					</div>
+					{filteredCourses.map((course) => (
 						<CourseCard
 							key={course.id}
+							id={course.id}
 							title={course.title}
 							description={course.description}
 							authors={getAuthors(course.authors, authorsList)}
 							duration={course.duration}
 							creationDate={course.creationDate}
 						/>
-					</>
-				))
+					))}
+				</>
 			)}
 		</>
 	);
