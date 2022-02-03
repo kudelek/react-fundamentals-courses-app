@@ -15,7 +15,7 @@ export default function CourseCard(props) {
 
 	const courseInfo = [
 		['Authors: ', props.authors],
-		['Duration: ', getDuration(props.duration)],
+		['Duration: ', `${getDuration(props.duration)} hours`],
 		['Created: ', dateGenerator(props.creationDate)],
 	];
 
