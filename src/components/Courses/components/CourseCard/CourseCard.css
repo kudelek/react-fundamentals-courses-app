@@ -34,7 +34,12 @@
 }
 
 .info-content {
-    display: inline;
+    display: -webkit-box;
+    height: 1em;
+    width: 100%;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .info-button {

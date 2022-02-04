@@ -15,7 +15,7 @@ export default function Courses(props) {
 	// eslint-disable-next-line no-unused-vars
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 	const [searchQuery, setSearchQuery] = useState('');
-	const [createCourseMode, setCreateCourseMode] = useState(false);
+	const [isCreateCourseMode, setIsCreateCourseMode] = useState(false);
 
 	const filteredCourses = filterCourses(coursesList, searchQuery);
 
@@ -36,9 +36,9 @@ export default function Courses(props) {
 
 	return (
 		<>
-			{createCourseMode ? (
+			{isCreateCourseMode ? (
 				<CreateCourse
-					setCreateCourseMode={setCreateCourseMode}
+					setCreateCourseMode={setIsCreateCourseMode}
 					authorsList={authorsList}
 					setAuthorsList={setAuthorsList}
 					coursesList={coursesList}
@@ -55,7 +55,7 @@ export default function Courses(props) {
 							<Button
 								buttonText='Add new course'
 								className='add-button'
-								onClick={() => setCreateCourseMode(true)}
+								onClick={() => setIsCreateCourseMode(true)}
 							/>
 						</div>
 					</div>

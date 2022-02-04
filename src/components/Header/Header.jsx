@@ -1,7 +1,9 @@
-import { Logo } from './components/Logo/Logo';
-import { Button } from '../../common/Button/Button';
-import './Header.css';
 import { useState } from 'react';
+
+import { Button } from '../../common/Button/Button';
+import { Logo } from './components/Logo/Logo';
+
+import './Header.css';
 
 export default function Header() {
 	// eslint-disable-next-line no-unused-vars

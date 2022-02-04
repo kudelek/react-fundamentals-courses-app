@@ -2,7 +2,6 @@ import './Input.css';
 
 export default function Input(props) {
 	const { className, id, labelText, labelClassName, ...rest } = props;
-	console.log(id + ' label className: ' + labelClassName);
 	return (
 		<div className={className}>
 			<label

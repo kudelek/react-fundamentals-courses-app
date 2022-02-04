@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
 import { Button } from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
+
 import './SearchBar.css';
 
 export default function SearchBar({ setSearchQuery }) {

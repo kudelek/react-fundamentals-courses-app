@@ -1,7 +1,8 @@
 import { Button } from '../../../../common/Button/Button';
-import './CourseCard.css';
 import { getDuration } from '../../../../helpers/pipeDuration';
 import { dateGenerator } from '../../../../helpers/dateGenerator';
+
+import './CourseCard.css';
 
 export default function CourseCard(props) {
 	function Info(props) {
