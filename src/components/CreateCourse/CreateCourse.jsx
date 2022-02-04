@@ -52,7 +52,9 @@ export default function CreateCourse({
 
 	function handleCreateAuthor(e) {
 		e.preventDefault();
-		if (!authorToBeCreated) return;
+		if (authorToBeCreated.length < 2) {
+			alert('Author name must be at least 2 characters long.');
+		}
 		setAuthorsList([
 			...authorsList,
 			{
