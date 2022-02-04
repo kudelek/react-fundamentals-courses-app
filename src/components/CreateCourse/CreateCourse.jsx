@@ -54,6 +54,7 @@ export default function CreateCourse({
 		e.preventDefault();
 		if (authorToBeCreated.length < 2) {
 			alert('Author name must be at least 2 characters long.');
+			return;
 		}
 		setAuthorsList([
 			...authorsList,
@@ -74,11 +75,15 @@ export default function CreateCourse({
 	function handleCreateCourse(e) {
 		e.preventDefault();
 		if (courseAuthorsList.length === 0) {
-			alert('Authors need to be added');
+			alert('Authors need to be added.');
 			return;
 		}
 		if (courseDuration === 0) {
-			alert('Course duration must be greater than 0');
+			alert('Course duration must be greater than 0.');
+			return;
+		}
+		if (courseDescription.length < 2) {
+			alert('Course description must be at least 2 characters long.');
 			return;
 		}
 		let creationDate = new Date().toLocaleDateString().replace('/', '.');
