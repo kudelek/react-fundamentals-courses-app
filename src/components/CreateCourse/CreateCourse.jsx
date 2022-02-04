@@ -19,7 +19,6 @@ export default function CreateCourse({
 	const [courseTitle, setCourseTitle] = useState('');
 	const [courseDescription, setCourseDescription] = useState('');
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
-	const [_authorsList, _setAuthorsList] = useState(authorsList);
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
@@ -29,9 +28,6 @@ export default function CreateCourse({
 			...courseAuthorsList,
 			{ id: authorToBeAdded.id, name: authorToBeAdded.name },
 		]);
-		_setAuthorsList(
-			_authorsList.filter((author) => author.id !== authorToBeAdded.id)
-		);
 	}
 
 	function handleDeleteAuthor(e, authorToBeDeleted) {
@@ -43,10 +39,6 @@ export default function CreateCourse({
 						(author) => author.id !== authorToBeDeleted.id
 					)
 				);
-				_setAuthorsList([
-					..._authorsList,
-					{ id: authorToBeDeleted.id, name: authorToBeDeleted.name },
-				]);
 			}
 	}
 
@@ -58,13 +50,6 @@ export default function CreateCourse({
 		}
 		setAuthorsList([
 			...authorsList,
-			{
-				id: uuid(),
-				name: authorToBeCreated,
-			},
-		]);
-		_setAuthorsList([
-			..._authorsList,
 			{
 				id: uuid(),
 				name: authorToBeCreated,
@@ -167,20 +152,24 @@ export default function CreateCourse({
 				</div>
 				<div className='course-authors-lists'>
 					<h2>Authors</h2>
-					{_authorsList.length === 0 ? (
+					{authorsList.length === 0 ? (
 						<div>Author list is empty</div>
 					) : (
 						<div>
-							{_authorsList.map((author) => (
-								<div key={author.id} className='course-authors-add'>
-									<div className='course-author-name'>{author.name}</div>
-									<Button
-										className='course-author-button'
-										buttonText='Add author'
-										onClick={(e) => handleAddAuthor(e, author)}
-									/>
-								</div>
-							))}
+							{authorsList
+								.filter(
+									(i) => !courseAuthorsList.filter((y) => y.id === i.id).length
+								)
+								.map((author) => (
+									<div key={author.id} className='course-authors-add'>
+										<div className='course-author-name'>{author.name}</div>
+										<Button
+											className='course-author-button'
+											buttonText='Add author'
+											onClick={(e) => handleAddAuthor(e, author)}
+										/>
+									</div>
+								))}
 						</div>
 					)}
 					<h2>Course authors</h2>
