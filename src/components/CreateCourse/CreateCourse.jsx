@@ -22,8 +22,6 @@ export default function CreateCourse({
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
-		for (let author of courseAuthorsList)
-			if (author.id === authorToBeAdded.id) return;
 		setCourseAuthorsList([
 			...courseAuthorsList,
 			{ id: authorToBeAdded.id, name: authorToBeAdded.name },
@@ -55,9 +53,12 @@ export default function CreateCourse({
 				name: authorToBeCreated,
 			},
 		]);
+		setAuthorToBeCreated('');
 	}
 
 	function handleCreateCourse(e) {
+		let creationDate = new Date().toLocaleDateString('en-GB');
+
 		e.preventDefault();
 		if (courseAuthorsList.length === 0) {
 			alert('Authors need to be added.');
@@ -71,7 +72,6 @@ export default function CreateCourse({
 			alert('Course description must be at least 2 characters long.');
 			return;
 		}
-		let creationDate = new Date().toLocaleDateString().replace('/', '.');
 		setCoursesList([
 			...coursesList,
 			{
@@ -133,7 +133,6 @@ export default function CreateCourse({
 						buttonText='Create author'
 						onClick={(e) => handleCreateAuthor(e)}
 					/>
-					<></>
 					<h2>Duration</h2>
 					<Input
 						id='course-duration-input'
@@ -155,7 +154,7 @@ export default function CreateCourse({
 					{authorsList.length === 0 ? (
 						<div>Author list is empty</div>
 					) : (
-						<div>
+						<>
 							{authorsList
 								.filter(
 									(i) => !courseAuthorsList.filter((y) => y.id === i.id).length
@@ -170,13 +169,13 @@ export default function CreateCourse({
 										/>
 									</div>
 								))}
-						</div>
+						</>
 					)}
 					<h2>Course authors</h2>
 					{courseAuthorsList.length === 0 ? (
 						<div>Course author list is empty</div>
 					) : (
-						<div>
+						<>
 							{courseAuthorsList.map((author) => (
 								<div key={author.id} className='course-authors-delete'>
 									<div className='course-author-name'>{author.name}</div>
@@ -187,7 +186,7 @@ export default function CreateCourse({
 									/>
 								</div>
 							))}
-						</div>
+						</>
 					)}
 				</div>
 			</div>
