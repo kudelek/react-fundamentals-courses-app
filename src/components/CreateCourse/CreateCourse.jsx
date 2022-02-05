@@ -57,7 +57,7 @@ export default function CreateCourse({
 	}
 
 	function handleCreateCourse(e) {
-		let creationDate = new Date().toLocaleDateString('en-GB');
+		let creationDate = new Date();
 
 		e.preventDefault();
 		if (courseAuthorsList.length === 0) {
