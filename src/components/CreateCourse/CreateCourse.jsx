@@ -131,7 +131,7 @@ export default function CreateCourse({
 					<Button
 						className='create-author-button'
 						buttonText='Create author'
-						onClick={(e) => handleCreateAuthor(e)}
+						onClick={handleCreateAuthor}
 					/>
 					<h2>Duration</h2>
 					<Input
