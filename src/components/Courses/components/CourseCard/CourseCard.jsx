@@ -1,3 +1,5 @@
+import { useHistory } from 'react-router-dom';
+
 import { Button } from '../../../../common/Button/Button';
 import Info from '../../../../common/Info/Info';
 import { getCourseInfo } from '../../../../helpers/getCourseInfo';
@@ -5,6 +7,12 @@ import { getCourseInfo } from '../../../../helpers/getCourseInfo';
 import './CourseCard.css';
 
 export default function CourseCard(props) {
+	const history = useHistory();
+
+	function handleShowCourse(e) {
+		e.preventDefault();
+		history.push(`/courses/${props.id}`);
+	}
 
 	return (
 		<section className='course-card' id={props.id}>
@@ -22,7 +30,7 @@ export default function CourseCard(props) {
 					<Button
 						className='show-course-button'
 						buttonText='Show course'
-						onClick={(e) => console.log(e.target.innerHTML, 'button clicked!')}
+						onClick={(e) => handleShowCourse(e)}
 					/>
 				</div>
 			</div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
@@ -9,6 +10,7 @@ export default function Registration() {
 	const [userName, setUserName] = useState('');
 	const [userEmail, setUserEmail] = useState('');
 	const [userPassword, setUserPassword] = useState('');
+	const history = useHistory();
 
 	function handleRegister() {
 		if (userName.length < 2) {
@@ -20,6 +22,7 @@ export default function Registration() {
 			alert('User password should be at least 2 characters long');
 			return;
 		}
+		history.push('./login');
 	}
 
 	return (
@@ -54,7 +57,7 @@ export default function Registration() {
 					onClick={handleRegister}
 				/>
 				<div className='bottom-text'>
-					If you have an account you can <a href=''>Login</a>
+					If you have an account you can <Link to='/login'>Login</Link>
 				</div>
 			</form>
 		</div>
