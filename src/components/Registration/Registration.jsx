@@ -5,7 +5,7 @@ import Input from '../../common/Input/Input';
 
 import './Registration.css';
 
-export default function Registration(props) {
+export default function Registration() {
 	const [userName, setUserName] = useState('');
 	const [userEmail, setUserEmail] = useState('');
 	const [userPassword, setUserPassword] = useState('');

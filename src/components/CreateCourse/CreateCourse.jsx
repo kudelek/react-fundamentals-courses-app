@@ -5,11 +5,10 @@ import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
 
+import { mockedAuthorsList } from '../../constants';
 import './CreateCourse.css';
 
 export default function CreateCourse({
-	authorsList,
-	setAuthorsList,
 	coursesList,
 	setCoursesList,
 	setCreateCourseMode,
@@ -19,6 +18,7 @@ export default function CreateCourse({
 	const [courseTitle, setCourseTitle] = useState('');
 	const [courseDescription, setCourseDescription] = useState('');
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
+	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();

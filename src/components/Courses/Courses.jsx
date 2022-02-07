@@ -4,16 +4,13 @@ import CourseCard from './components/CourseCard/CourseCard';
 import CreateCourse from '../CreateCourse/CreateCourse';
 import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-import { getAuthors } from '../../helpers/getAuthors';
 
-import { mockedAuthorsList, mockedCoursesList } from '../../constants';
+import { mockedCoursesList } from '../../constants';
 import './Courses.css';
 
 export default function Courses(props) {
 	// eslint-disable-next-line no-unused-vars
 	const [coursesList, setCoursesList] = useState(mockedCoursesList);
-	// eslint-disable-next-line no-unused-vars
-	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 	const [searchQuery, setSearchQuery] = useState('');
 	const [isCreateCourseMode, setIsCreateCourseMode] = useState(false);
 
@@ -39,8 +36,6 @@ export default function Courses(props) {
 			{isCreateCourseMode ? (
 				<CreateCourse
 					setCreateCourseMode={setIsCreateCourseMode}
-					authorsList={authorsList}
-					setAuthorsList={setAuthorsList}
 					coursesList={coursesList}
 					setCoursesList={setCoursesList}
 				/>
@@ -65,7 +60,7 @@ export default function Courses(props) {
 							id={course.id}
 							title={course.title}
 							description={course.description}
-							authors={getAuthors(course.authors, authorsList)}
+							authors={course.authors}
 							duration={course.duration}
 							creationDate={course.creationDate}
 						/>

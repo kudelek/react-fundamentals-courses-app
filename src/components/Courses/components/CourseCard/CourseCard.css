@@ -16,29 +16,13 @@
     margin: 0 0 1em ;
 }
 
-.info {
-    width: 30%;
-    display: flex;
-    flex-flow: column;
-}
-
-.info-item {
-    display: flex;
-    flex-flow: row nowrap;
-    margin: 0.3em
-}
-
-.info-title {
-    font-weight: bold;
-    padding-right: 0.3em;
-}
-
-.info-content {
+.content-description {
     display: -webkit-box;
-    height: 1em;
+    height: 4.5em;
+    margin-bottom: 0.5em;
     width: 100%;
     overflow: hidden;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
 }
 
