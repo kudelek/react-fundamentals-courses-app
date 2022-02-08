@@ -22,9 +22,11 @@ export default function CourseCard(props) {
 			</div>
 			<div className='info'>
 				<div className='info-list'>
-					{getCourseInfo(props).map(([title, content]) => (
-						<Info key={title} infoTitle={title} infoContent={content} />
-					))}
+					{getCourseInfo(props, ['authors', 'duration', 'created']).map(
+						([title, content]) => (
+							<Info key={title} infoTitle={title} infoContent={content} />
+						)
+					)}
 				</div>
 				<div className='info-button'>
 					<Button
