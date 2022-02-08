@@ -18,11 +18,19 @@ export default function CourseInfo() {
 			<div className='courseinfo'>
 				<span>{course.description}</span>
 				<div className='information'>
-					{getCourseInfo(course, ['id', 'duration', 'created', 'authors']).map(
+					{getCourseInfo(course, ['id', 'duration', 'created']).map(
 						([title, content]) => (
 							<Info key={title} infoTitle={title} infoContent={content} />
 						)
 					)}
+					{getCourseInfo(course, ['authors']).map(([title, content]) => (
+						<Info
+							key={title}
+							infoTitle={title}
+							infoContent={content}
+							multiline
+						/>
+					))}
 				</div>
 			</div>
 		</div>

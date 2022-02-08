@@ -4,7 +4,15 @@ export default function Info(props) {
 	return (
 		<div className='info-item'>
 			<div className='info-title'>{props.infoTitle}</div>
-			<div className='info-content'>{props.infoContent}</div>
+			{!props.multiline ? (
+				<div className='info-content'>{props.infoContent}</div>
+			) : (
+				<div className='info-content-multiline'>
+					{props.infoContent.split(', ').map((content) => (
+						<div className='info-content-multiline-item'>{content}</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }

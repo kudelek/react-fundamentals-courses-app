@@ -23,3 +23,12 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
+
+.info-content-multiline {
+    display: flex;
+    flex-flow: column;
+}
+
+.info-content-multiline-item {
+    padding-bottom: 0.5em;
+}
