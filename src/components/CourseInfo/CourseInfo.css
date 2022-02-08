@@ -1,0 +1,17 @@
+.courseinfo {
+    display: flex;
+    flex-flow: row;
+}
+
+span {
+    width: 70%;
+    padding: 1em;
+}
+
+.information {
+    padding: 1em;
+}
+
+.info-item {
+    padding: 0.3em;
+}

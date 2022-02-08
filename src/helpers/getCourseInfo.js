@@ -23,6 +23,5 @@ export function getCourseInfo(props, params) {
 	const courseInfo = params.map(
 		(p) => courseInfoListOptions.filter((info) => info.param === p)[0].content
 	);
-	console.log(courseInfo);
 	return courseInfo;
 }
