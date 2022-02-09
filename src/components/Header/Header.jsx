@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useAppContext } from '../../AppContext';
 
@@ -10,7 +11,7 @@ import './Header.css';
 const baseUrl = 'http://localhost:3000';
 
 export default function Header() {
-	const { userName } = useAppContext();
+	const [userName, setUserName] = useState('');
 	const { isAuthenticated, setIsAuthenticated } = useAppContext();
 
 	const history = useHistory();
@@ -19,17 +20,24 @@ export default function Header() {
 		const headers = {
 			Authorization: localStorage.getItem('authKey'),
 		};
-		console.log(localStorage.getItem('authKey'));
 
 		axios
 			.delete(`${baseUrl}/logout`, { headers: headers })
 			.then(() => {
 				setIsAuthenticated(false);
 				localStorage.removeItem('authKey');
+				localStorage.removeItem('userName');
+				setIsAuthenticated(false);
 				history.push('/login');
 			})
 			.catch((e) => alert(e.response.data.errors.join('\n')));
 	}
+
+	useEffect(() => {
+		setUserName(localStorage.getItem('userName'));
+		setIsAuthenticated(localStorage.getItem('authKey'));
+	}, []);
+
 	return (
 		<header>
 			<div className='left'>

@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
-	Switch,
-	Route,
-	BrowserRouter as Router,
-	Redirect,
-} from 'react-router-dom';
+import { Switch, BrowserRouter as Router, Redirect } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
@@ -13,6 +8,7 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import Courses from './components/Courses/Courses';
 import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
+import UnauthenticatedRoute from './components/Routes/UnauthenticatedRoute';
 import { AppContext } from './AppContext';
 
 import { mockedCoursesList } from './constants';
@@ -22,7 +18,6 @@ function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(
 		localStorage.getItem('authKey')
 	);
-	const [userName, setUserName] = useState('');
 	const [coursesList, setCoursesList] = useState(mockedCoursesList);
 
 	return (
@@ -32,26 +27,24 @@ function App() {
 					value={{
 						isAuthenticated,
 						setIsAuthenticated,
-						userName,
-						setUserName,
 						coursesList,
 						setCoursesList,
 					}}
 				>
 					<Header />
 					<Switch>
-						<Route exact path='/login'>
+						<UnauthenticatedRoute exact path='/login'>
 							<Login />
-						</Route>
+						</UnauthenticatedRoute>
 						<AuthenticatedRoute exact path='/courses/add'>
 							<CreateCourse />
 						</AuthenticatedRoute>
 						<AuthenticatedRoute exact path='/courses/:courseId'>
 							<CourseInfo />
 						</AuthenticatedRoute>
-						<Route exact path='/registration'>
+						<UnauthenticatedRoute exact path='/registration'>
 							<Registration />
-						</Route>
+						</UnauthenticatedRoute>
 						<AuthenticatedRoute exact path='/courses'>
 							<Courses />
 						</AuthenticatedRoute>

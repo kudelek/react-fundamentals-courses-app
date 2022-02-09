@@ -12,7 +12,6 @@ import './Login.css';
 const baseUrl = 'http://localhost:3000';
 
 export default function Login() {
-	const { setUserName } = useAppContext();
 	const [user, setUser] = useState({ email: '', password: '' });
 	const { setIsAuthenticated } = useAppContext();
 	const history = useHistory();
@@ -26,7 +25,7 @@ export default function Login() {
 				const authKey = response.data.result;
 				setIsAuthenticated(true);
 				localStorage.setItem('authKey', authKey);
-				setUserName(response.data.user.name);
+				localStorage.setItem('userName', response.data.user.name);
 				history.push('/courses');
 			})
 			.catch((e) => alert(e.response.data.errors.join('\n')));

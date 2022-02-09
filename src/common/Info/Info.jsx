@@ -1,8 +1,6 @@
 import './Info.css';
 
 export default function Info(props) {
-	console.log(props.multiline);
-	console.log(props);
 	return (
 		<div className='info-item'>
 			<div className='info-title'>{props.infoTitle}</div>

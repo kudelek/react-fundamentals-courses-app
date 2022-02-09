@@ -5,6 +5,6 @@ export default function AuthenticatedRoute({ children, ...rest }) {
 	const authKey = localStorage.getItem('authKey');
 
 	return (
-		<Route {...rest}>{authKey ? children : <Redirect to='/login' />}</Route>
+		<Route {...rest}>{!authKey ? children : <Redirect to='/courses' />}</Route>
 	);
 }
