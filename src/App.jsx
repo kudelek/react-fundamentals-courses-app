@@ -23,18 +23,19 @@ function App() {
 						<Route exact path='/login'>
 							<Login />
 						</Route>
-						<Route exact path='/courses/:courseId'>
+						<AuthenticatedRoute exact path='/courses/add'>
+							<CreateCourse />
+						</AuthenticatedRoute>
+						<AuthenticatedRoute exact path='/courses/:courseId'>
 							<CourseInfo />
-						</Route>
+						</AuthenticatedRoute>
 						<Route exact path='/registration'>
 							<Registration />
 						</Route>
-						<Route exact path='/courses/add'>
-							<CreateCourse />
-						</Route>
-						<Route exact path='/courses'>
+						<AuthenticatedRoute exact path='/courses'>
 							<Courses />
-						</Route>
+						</AuthenticatedRoute>
+						<Redirect from='/' to='/login' />
 					</Switch>
 				</AppContext.Provider>
 			</Router>
