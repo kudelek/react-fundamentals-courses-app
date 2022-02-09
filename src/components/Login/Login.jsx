@@ -26,7 +26,7 @@ export default function Login() {
 		axios
 			.post(`${baseUrl}/login`, data)
 			.then((response) => {
-				const authKey = response.data.result.split(' ')[1];
+				const authKey = response.data.result;
 				console.log(authKey);
 				setIsAuthenticated(true);
 				localStorage.setItem('authKey', authKey);
