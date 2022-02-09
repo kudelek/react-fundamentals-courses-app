@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useAppContext } from '../../AppContext';
@@ -7,17 +8,29 @@ import { Logo } from './components/Logo/Logo';
 
 import './Header.css';
 
+const baseUrl = 'http://localhost:3000';
+
 export default function Header() {
 	// eslint-disable-next-line no-unused-vars
-	const [userName, setUserName] = useState('someUserName');
+	const { userName } = useAppContext();
 	const { isAuthenticated, setIsAuthenticated } = useAppContext();
 
 	const history = useHistory();
 
 	function handleLogout() {
 		// TO DO: FETCH DELETE LOGIN
-		setIsAuthenticated(false);
-		history.push('/login');
+		const headers = {
+			Authorisation: localStorage.getItem('authKey'),
+			accept: '*/*',
+		};
+		console.log(localStorage.getItem('authKey'));
+
+		axios.delete(`${baseUrl}/logout`, headers).then((response) => {
+			console.log(response);
+		});
+
+		// setIsAuthenticated(false);
+		// history.push('/login');
 	}
 	return (
 		<header>

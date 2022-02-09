@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -8,7 +9,10 @@ import Input from '../../common/Input/Input';
 
 import './Login.css';
 
+const baseUrl = 'http://localhost:3000';
+
 export default function Login() {
+	const { setUserName } = useAppContext();
 	const [userEmail, setUserEmail] = useState('');
 	const [userPassword, setUserPassword] = useState('');
 	const { setIsAuthenticated } = useAppContext();
@@ -16,14 +20,20 @@ export default function Login() {
 
 	function handleLogin(e) {
 		e.preventDefault();
-		console.log('Login button clicked!');
-		// TO DO: EMAIL VALIDATION
-		if (userPassword.length < 2) {
-			alert('User password should be at least 2 characters long');
-			return;
-		}
-		setIsAuthenticated(true);
-		history.push('/courses');
+
+		const data = { email: userEmail, password: userPassword };
+
+		axios
+			.post(`${baseUrl}/login`, data)
+			.then((response) => {
+				const authKey = response.data.result.split(' ')[1];
+				console.log(authKey);
+				setIsAuthenticated(true);
+				localStorage.setItem('authKey', authKey);
+				setUserName(response.data.user.name);
+				history.push('/courses');
+			})
+			.catch((e) => alert(e.response.data.errors.join('\n')));
 	}
 
 	return (

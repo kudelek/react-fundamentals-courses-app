@@ -1,28 +1,33 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useAppContext } from '../../AppContext';
 
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 
 import './Registration.css';
 
+const baseUrl = 'http://localhost:3000';
+
 export default function Registration() {
-	const [userName, setUserName] = useState('');
+	const { userName, setUserName } = useAppContext();
 	const [userEmail, setUserEmail] = useState('');
 	const [userPassword, setUserPassword] = useState('');
 	const history = useHistory();
 
-	function handleRegister() {
-		if (userName.length < 2) {
-			alert('User name should be at least 2 characters long');
-			return;
-		}
-		// TO DO: EMAIL VALIDATION
-		if (userPassword.length < 2) {
-			alert('User password should be at least 2 characters long');
-			return;
-		}
-		history.push('./login');
+	function handleRegister(e) {
+		e.preventDefault();
+
+		const data = { name: userName, email: userEmail, password: userPassword };
+
+		axios
+			.post(`${baseUrl}/register`, data)
+			.then((response) => {
+				alert(`Hooray! ${response.data.result}`);
+				history.push('./login');
+			})
+			.catch((e) => alert(e.response.data.errors.join('\n')));
 	}
 
 	return (
@@ -54,7 +59,7 @@ export default function Registration() {
 				<Button
 					className='button'
 					buttonText='Registration'
-					onClick={handleRegister}
+					onClick={(e) => handleRegister(e)}
 				/>
 				<div className='bottom-text'>
 					If you have an account you can <Link to='/login'>Login</Link>
