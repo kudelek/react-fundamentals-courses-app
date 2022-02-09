@@ -9,8 +9,7 @@ import './CourseCard.css';
 export default function CourseCard(props) {
 	const history = useHistory();
 
-	function handleShowCourse(e) {
-		e.preventDefault();
+	function handleShowCourse() {
 		history.push(`/courses/${props.id}`);
 	}
 
@@ -22,7 +21,7 @@ export default function CourseCard(props) {
 			</div>
 			<div className='info'>
 				<div className='info-list'>
-					{getCourseInfo(props, ['authors', 'duration', 'created']).map(
+					{getCourseInfo(props, ['authors', 'duration', 'creationDate']).map(
 						([title, content]) => (
 							<Info key={title} infoTitle={title} infoContent={content} />
 						)
@@ -32,7 +31,7 @@ export default function CourseCard(props) {
 					<Button
 						className='show-course-button'
 						buttonText='Show course'
-						onClick={(e) => handleShowCourse(e)}
+						onClick={handleShowCourse}
 					/>
 				</div>
 			</div>

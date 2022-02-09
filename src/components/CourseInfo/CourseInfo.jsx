@@ -8,9 +8,7 @@ import './CourseInfo.css';
 
 export default function CourseInfo() {
 	const { courseId } = useParams();
-	const course = mockedCoursesList.filter(
-		(course) => course.id === courseId
-	)[0];
+	const course = mockedCoursesList.find((course) => course.id === courseId);
 	return (
 		<div className='main-container'>
 			<Link className='link' to='/courses'>
@@ -20,7 +18,7 @@ export default function CourseInfo() {
 			<div className='courseinfo'>
 				<span className='description'>{course.description}</span>
 				<div className='information'>
-					{getCourseInfo(course, ['id', 'duration', 'created']).map(
+					{getCourseInfo(course, ['id', 'duration', 'creationDate']).map(
 						([title, content]) => (
 							<Info key={title} infoTitle={title} infoContent={content} />
 						)
@@ -30,7 +28,7 @@ export default function CourseInfo() {
 							key={title}
 							infoTitle={title}
 							infoContent={content}
-							multiline
+							multiline={['authors']}
 						/>
 					))}
 				</div>

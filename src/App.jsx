@@ -12,14 +12,18 @@ import Registration from './components/Registration/Registration';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import Courses from './components/Courses/Courses';
+import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 import { AppContext } from './AppContext';
 
+import { mockedCoursesList } from './constants';
 import './App.css';
-import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 
 function App() {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [isAuthenticated, setIsAuthenticated] = useState(
+		localStorage.getItem('authKey')
+	);
 	const [userName, setUserName] = useState('');
+	const [coursesList, setCoursesList] = useState(mockedCoursesList);
 
 	return (
 		<div className='App'>
@@ -30,6 +34,8 @@ function App() {
 						setIsAuthenticated,
 						userName,
 						setUserName,
+						coursesList,
+						setCoursesList,
 					}}
 				>
 					<Header />

@@ -13,21 +13,17 @@ const baseUrl = 'http://localhost:3000';
 
 export default function Login() {
 	const { setUserName } = useAppContext();
-	const [userEmail, setUserEmail] = useState('');
-	const [userPassword, setUserPassword] = useState('');
+	const [user, setUser] = useState({ email: '', password: '' });
 	const { setIsAuthenticated } = useAppContext();
 	const history = useHistory();
 
 	function handleLogin(e) {
 		e.preventDefault();
 
-		const data = { email: userEmail, password: userPassword };
-
 		axios
-			.post(`${baseUrl}/login`, data)
+			.post(`${baseUrl}/login`, user)
 			.then((response) => {
 				const authKey = response.data.result;
-				console.log(authKey);
 				setIsAuthenticated(true);
 				localStorage.setItem('authKey', authKey);
 				setUserName(response.data.user.name);
@@ -36,29 +32,35 @@ export default function Login() {
 			.catch((e) => alert(e.response.data.errors.join('\n')));
 	}
 
+	function handleChange(e) {
+		const name = e.target.name;
+		const value = e.target.value;
+		setUser({ ...user, [name]: value });
+	}
+
 	return (
 		<div className='container'>
-			<form className='form'>
+			<form className='form' onSubmit={handleLogin}>
 				<h2>Login</h2>
 				<Input
+					name='email'
 					labelText='Email'
-					labelClassName='label'
+					labelClassName='login-label'
 					placeholder='Enter email'
-					value={userEmail}
-					onInput={(e) => setUserEmail(e.target.value)}
+					value={user.email}
+					onInput={handleChange}
+					type='email'
 				/>
 				<Input
+					name='password'
 					labelText='Password'
 					labelClassName='label'
 					placeholder='Enter password'
-					value={userPassword}
-					onInput={(e) => setUserPassword(e.target.value)}
+					value={user.password}
+					onInput={handleChange}
+					type='password'
 				/>
-				<Button
-					className='button'
-					buttonText='Login'
-					onClick={(e) => handleLogin(e)}
-				/>
+				<Button className='button' buttonText='Login' />
 				<div className='bottom-text'>
 					If you don't have an account you can{' '}
 					<Link to='/registration'>Register</Link>

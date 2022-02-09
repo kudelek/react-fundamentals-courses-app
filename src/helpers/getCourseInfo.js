@@ -15,13 +15,12 @@ export function getCourseInfo(props, params) {
 			content: ['Duration: ', `${getDuration(props.duration)} hours`],
 		},
 		{
-			param: 'created',
+			param: 'creationDate',
 			content: ['Created: ', dateGenerator(props.creationDate)],
 		},
 		{ param: 'id', content: ['ID: ', props.id] },
 	];
-	const courseInfo = params.map(
-		(p) => courseInfoListOptions.filter((info) => info.param === p)[0].content
+	return params.map(
+		(p) => courseInfoListOptions.find((info) => info.param === p).content
 	);
-	return courseInfo;
 }

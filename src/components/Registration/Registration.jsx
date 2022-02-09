@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useAppContext } from '../../AppContext';
 
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
@@ -11,18 +10,14 @@ import './Registration.css';
 const baseUrl = 'http://localhost:3000';
 
 export default function Registration() {
-	const { userName, setUserName } = useAppContext();
-	const [userEmail, setUserEmail] = useState('');
-	const [userPassword, setUserPassword] = useState('');
 	const history = useHistory();
+	const [user, setUser] = useState({ name: '', email: '', password: '' });
 
 	function handleRegister(e) {
 		e.preventDefault();
 
-		const data = { name: userName, email: userEmail, password: userPassword };
-
 		axios
-			.post(`${baseUrl}/register`, data)
+			.post(`${baseUrl}/register`, user)
 			.then((response) => {
 				alert(`Hooray! ${response.data.result}`);
 				history.push('./login');
@@ -30,37 +25,43 @@ export default function Registration() {
 			.catch((e) => alert(e.response.data.errors.join('\n')));
 	}
 
+	function handleChange(e) {
+		const name = e.target.name;
+		const value = e.target.value;
+		setUser({ ...user, [name]: value });
+	}
+
 	return (
 		<div className='container'>
-			<form className='form'>
+			<form className='form' onSubmit={handleRegister}>
 				<h2>Registration</h2>
 				<Input
-					id='name'
+					name='name'
 					labelText='Name'
-					labelClassName='label'
+					labelClassName='registration-label'
 					placeholder='Enter name'
-					value={userName}
-					onInput={(e) => setUserName(e.target.value)}
+					value={user.name}
+					onInput={handleChange}
 				/>
 				<Input
+					name='email'
 					labelText='Email'
-					labelClassName='label'
+					labelClassName='registration-label'
 					placeholder='Enter email'
-					value={userEmail}
-					onInput={(e) => setUserEmail(e.target.value)}
+					value={user.email}
+					onInput={handleChange}
+					type='email'
 				/>
 				<Input
+					name='password'
 					labelText='Password'
-					labelClassName='label'
+					labelClassName='registration-label'
 					placeholder='Enter password'
-					value={userPassword}
-					onInput={(e) => setUserPassword(e.target.value)}
+					value={user.password}
+					onInput={handleChange}
+					type='password'
 				/>
-				<Button
-					className='button'
-					buttonText='Registration'
-					onClick={(e) => handleRegister(e)}
-				/>
+				<Button className='button' buttonText='Registration' />
 				<div className='bottom-text'>
 					If you have an account you can <Link to='/login'>Login</Link>
 				</div>
