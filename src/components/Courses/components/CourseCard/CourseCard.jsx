@@ -9,8 +9,7 @@ import './CourseCard.css';
 export default function CourseCard(props) {
 	const history = useHistory();
 
-	function handleShowCourse(e) {
-		e.preventDefault();
+	function handleShowCourse() {
 		history.push(`/courses/${props.id}`);
 	}
 
@@ -32,7 +31,7 @@ export default function CourseCard(props) {
 					<Button
 						className='show-course-button'
 						buttonText='Show course'
-						onClick={(e) => handleShowCourse(e)}
+						onClick={handleShowCourse}
 					/>
 				</div>
 			</div>

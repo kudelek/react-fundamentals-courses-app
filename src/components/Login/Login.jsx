@@ -19,15 +19,14 @@ export default function Login() {
 	const history = useHistory();
 
 	function handleLogin(e) {
-		e.preventDefault();
-
 		const data = { email: userEmail, password: userPassword };
+
+		e.preventDefault();
 
 		axios
 			.post(`${baseUrl}/login`, data)
 			.then((response) => {
 				const authKey = response.data.result;
-				console.log(authKey);
 				setIsAuthenticated(true);
 				localStorage.setItem('authKey', authKey);
 				setUserName(response.data.user.name);
@@ -38,7 +37,7 @@ export default function Login() {
 
 	return (
 		<div className='container'>
-			<form className='form'>
+			<form className='form' onSubmit={handleLogin}>
 				<h2>Login</h2>
 				<Input
 					labelText='Email'
@@ -46,6 +45,7 @@ export default function Login() {
 					placeholder='Enter email'
 					value={userEmail}
 					onInput={(e) => setUserEmail(e.target.value)}
+					type='email'
 				/>
 				<Input
 					labelText='Password'
@@ -53,12 +53,9 @@ export default function Login() {
 					placeholder='Enter password'
 					value={userPassword}
 					onInput={(e) => setUserPassword(e.target.value)}
+					type='password'
 				/>
-				<Button
-					className='button'
-					buttonText='Login'
-					onClick={(e) => handleLogin(e)}
-				/>
+				<Button className='button' buttonText='Login' />
 				<div className='bottom-text'>
 					If you don't have an account you can{' '}
 					<Link to='/registration'>Register</Link>

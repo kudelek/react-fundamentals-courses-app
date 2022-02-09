@@ -1,20 +1,23 @@
 import './Input.css';
 
 export default function Input(props) {
-	const { className, id, labelText, labelClassName, ...rest } = props;
+	const { className, id, labelText, labelClassName, inputClassName, ...rest } =
+		props;
 	return (
 		<div className={className}>
 			<label
 				className={
-					labelClassName !== undefined
-						? `input-label ${labelClassName}`
-						: 'visually-hidden'
+					labelClassName ? `input-label ${labelClassName}` : 'visually-hidden'
 				}
 				htmlFor={id}
 			>
 				{labelText}
 			</label>
-			<input id={id} className={`input ${id}`} {...rest} />
+			<input
+				id={id}
+				className={inputClassName ? `input ${inputClassName}` : 'input'}
+				{...rest}
+			/>
 		</div>
 	);
 }

@@ -5,13 +5,12 @@ import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 
-import { mockedCoursesList } from '../../constants';
 import './Courses.css';
+import { useAppContext } from '../../AppContext';
 
-export default function Courses(props) {
-	// eslint-disable-next-line no-unused-vars
-	const [coursesList, setCoursesList] = useState(mockedCoursesList);
+export default function Courses() {
 	const [searchQuery, setSearchQuery] = useState('');
+	const { coursesList } = useAppContext();
 	const history = useHistory();
 
 	const filteredCourses = filterCourses(coursesList, searchQuery);
@@ -31,6 +30,10 @@ export default function Courses(props) {
 		});
 	}
 
+	function handleAddCourse() {
+		history.push('/courses/add');
+	}
+
 	return (
 		<>
 			<div className='search-and-add-bar'>
@@ -39,7 +42,7 @@ export default function Courses(props) {
 					<Button
 						buttonText='Add new course'
 						className='add-button'
-						onClick={() => history.push('/courses/add')}
+						onClick={handleAddCourse}
 					/>
 				</div>
 			</div>

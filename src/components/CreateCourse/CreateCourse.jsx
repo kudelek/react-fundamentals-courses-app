@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 import { Button } from '../../common/Button/Button';
@@ -7,18 +8,17 @@ import { getDuration } from '../../helpers/pipeDuration';
 
 import { mockedAuthorsList } from '../../constants';
 import './CreateCourse.css';
+import { useAppContext } from '../../AppContext';
 
-export default function CreateCourse({
-	coursesList,
-	setCoursesList,
-	setCreateCourseMode,
-}) {
+export default function CreateCourse() {
 	const [courseAuthorsList, setCourseAuthorsList] = useState([]);
-	const [courseDuration, setCourseDuration] = useState(0);
+	const [courseDuration, setCourseDuration] = useState('');
 	const [courseTitle, setCourseTitle] = useState('');
 	const [courseDescription, setCourseDescription] = useState('');
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
+	const { coursesList, setCoursesList } = useAppContext();
+	const history = useHistory();
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
@@ -83,7 +83,7 @@ export default function CreateCourse({
 				authors: courseAuthorsList.map((author) => author.id),
 			},
 		]);
-		setCreateCourseMode(false);
+		history.push('/courses');
 	}
 
 	return (

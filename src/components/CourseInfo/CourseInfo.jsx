@@ -8,9 +8,7 @@ import './CourseInfo.css';
 
 export default function CourseInfo() {
 	const { courseId } = useParams();
-	const course = mockedCoursesList.filter(
-		(course) => course.id === courseId
-	)[0];
+	const course = mockedCoursesList.find((course) => course.id === courseId);
 	return (
 		<div className='main-container'>
 			<Link className='link' to='/courses'>
