@@ -12,11 +12,13 @@ export default function CourseInfo() {
 		(course) => course.id === courseId
 	)[0];
 	return (
-		<div>
-			<Link to='/courses'>Back to courses</Link>
+		<div className='main-container'>
+			<Link className='link' to='/courses'>
+				&larr; Back to courses
+			</Link>
 			<h2>{course.title}</h2>
 			<div className='courseinfo'>
-				<span>{course.description}</span>
+				<span className='description'>{course.description}</span>
 				<div className='information'>
 					{getCourseInfo(course, ['id', 'duration', 'created']).map(
 						([title, content]) => (
