@@ -13,8 +13,8 @@ export default function Info(props) {
 				<div className='info-content'>{props.infoContent}</div>
 			) : (
 				<div className='info-content-multiline'>
-					{props.infoContent.split(', ').map((content, index) => (
-						<div key={index} className='info-content-multiline-item'>
+					{props.infoContent.split(', ').map((content) => (
+						<div key={content} className='info-content-multiline-item'>
 							{content}
 						</div>
 					))}

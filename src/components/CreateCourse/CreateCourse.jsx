@@ -45,6 +45,13 @@ export default function CreateCourse() {
 			alert('Author name must be at least 2 characters long.');
 			return;
 		}
+		if (
+			authorsList.filter((author) => author.name === authorToBeCreated).length >
+			0
+		) {
+			alert('Author already exists!');
+			return;
+		}
 		setAuthorsList([
 			...authorsList,
 			{
