@@ -18,7 +18,7 @@ export default function CourseInfo() {
 			</Link>
 			<h2>{course.title}</h2>
 			<div className='courseinfo'>
-				<span className='description'>{course.description}</span>
+				<span className='course-description'>{course.description}</span>
 				<div className='information'>
 					{getCourseInfo(course, authorsList, [
 						'id',

@@ -28,7 +28,13 @@ export default function Login() {
 				localStorage.setItem('userName', response.data.user.name);
 				history.push('/courses');
 			})
-			.catch((e) => alert(e.response.data.errors.join('\n')));
+			.catch((e) => {
+				alert(
+					e.response.data.errors
+						? e.response.data.errors.join('\n')
+						: e.response.data.result ?? 'Something went wrong'
+				);
+			});
 	}
 
 	function handleChange(e) {
@@ -44,22 +50,24 @@ export default function Login() {
 				<Input
 					name='email'
 					labelText='Email'
-					labelClassName='login-label'
 					inputClassName='flex'
 					placeholder='Enter email'
 					value={user.email}
 					onInput={handleChange}
 					type='email'
+					label
+					required
 				/>
 				<Input
 					name='password'
 					labelText='Password'
-					labelClassName='label'
 					inputClassName='flex'
 					placeholder='Enter password'
 					value={user.password}
 					onInput={handleChange}
 					type='password'
+					label
+					required
 				/>
 				<Button className='button' buttonText='Login' />
 				<div className='bottom-text'>

@@ -70,7 +70,7 @@ export default function CreateCourse() {
 			alert('Authors need to be added.');
 			return;
 		}
-		if (courseDuration === 0) {
+		if (parseInt(courseDuration, 10) === 0) {
 			alert('Course duration must be greater than 0.');
 			return;
 		}
@@ -98,11 +98,12 @@ export default function CreateCourse() {
 				<Input
 					id='course-title-input'
 					className='course-title'
+					inputClassName='flex width-90'
 					value={courseTitle}
 					onInput={(e) => setCourseTitle(e.target.value)}
 					placeholder='Enter title...'
-					labelClassName='course-title-input-label'
 					labelText='Title'
+					label
 					required
 				/>
 				<div className='create-course'>
@@ -132,6 +133,7 @@ export default function CreateCourse() {
 						onInput={(e) => setAuthorToBeCreated(e.target.value)}
 						placeholder='Enter author name...'
 						labelClassName='create-author-input-label'
+						inputClassName='flex width-90'
 						labelText='Author name'
 					/>
 					<Button
@@ -144,10 +146,12 @@ export default function CreateCourse() {
 						id='course-duration-input'
 						className='course-duration'
 						labelClassName='course-duration-input-label'
+						inputClassName='flex width-90'
 						value={courseDuration}
 						onInput={(e) => setCourseDuration(e.target.value)}
 						placeholder='Enter duration in minutes...'
 						type='number'
+						min='1'
 						labelText='Duration'
 						required
 					/>

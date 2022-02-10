@@ -7,10 +7,6 @@
     justify-content: center;
 }
 
-.login-label {
-    padding: 0;
-}
-
 .form {
     display: flex;
     flex-flow: column nowrap;

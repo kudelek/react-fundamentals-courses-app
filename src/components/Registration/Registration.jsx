@@ -22,7 +22,13 @@ export default function Registration() {
 				alert(`Hooray! ${response.data.result}`);
 				history.push('./login');
 			})
-			.catch((e) => alert(e.response.data.errors.join('\n')));
+			.catch((e) => {
+				alert(
+					e.response.data.errors
+						? e.response.data.errors.join('\n')
+						: e.response.data.result ?? 'Something went wrong'
+				);
+			});
 	}
 
 	function handleChange(e) {
@@ -38,31 +44,31 @@ export default function Registration() {
 				<Input
 					name='name'
 					labelText='Name'
-					labelClassName='registration-label'
 					inputClassName='flex'
 					placeholder='Enter name'
 					value={user.name}
 					onInput={handleChange}
+					label
 				/>
 				<Input
 					name='email'
 					labelText='Email'
-					labelClassName='registration-label'
 					inputClassName='flex'
 					placeholder='Enter email'
 					value={user.email}
 					onInput={handleChange}
 					type='email'
+					label
 				/>
 				<Input
 					name='password'
 					labelText='Password'
-					labelClassName='registration-label'
 					inputClassName='flex'
 					placeholder='Enter password'
 					value={user.password}
 					onInput={handleChange}
 					type='password'
+					label
 				/>
 				<Button className='button' buttonText='Registration' />
 				<div className='bottom-text'>

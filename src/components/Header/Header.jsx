@@ -22,14 +22,20 @@ export default function Header() {
 		};
 
 		axios
-			.delete(`${baseUrl}/logout`, { headers: headers })
+			.delete(`${baseUrl}/logout`, { headers })
 			.then(() => {
 				localStorage.removeItem('authKey');
 				localStorage.removeItem('userName');
 				setIsAuthenticated(false);
 				history.push('/login');
 			})
-			.catch((e) => alert(e.response.data.errors.join('\n')));
+			.catch((e) => {
+				alert(
+					e.response.data.errors
+						? e.response.data.errors.join('\n')
+						: e.response.data.result ?? 'Something went wrong'
+				);
+			});
 	}
 
 	useEffect(() => {

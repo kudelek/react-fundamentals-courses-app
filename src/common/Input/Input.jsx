@@ -1,11 +1,23 @@
 import './Input.css';
 
 export default function Input(props) {
-	const { className, id, labelText, labelClassName, inputClassName, ...rest } =
-		props;
+	const {
+		className,
+		id,
+		label,
+		labelText,
+		labelClassName,
+		inputClassName,
+		...rest
+	} = props;
 	return (
 		<div className={className}>
-			<label className={labelClassName ?? 'visually-hidden'} htmlFor={id}>
+			<label
+				className={
+					!(label || labelClassName) ? 'visually-hidden' : labelClassName ?? ''
+				}
+				htmlFor={id}
+			>
 				{labelText}
 			</label>
 			<input
