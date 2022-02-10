@@ -45,6 +45,7 @@ export default function Login() {
 					name='email'
 					labelText='Email'
 					labelClassName='login-label'
+					inputClassName='flex'
 					placeholder='Enter email'
 					value={user.email}
 					onInput={handleChange}
@@ -54,6 +55,7 @@ export default function Login() {
 					name='password'
 					labelText='Password'
 					labelClassName='label'
+					inputClassName='flex'
 					placeholder='Enter password'
 					value={user.password}
 					onInput={handleChange}

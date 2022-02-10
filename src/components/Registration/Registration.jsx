@@ -39,6 +39,7 @@ export default function Registration() {
 					name='name'
 					labelText='Name'
 					labelClassName='registration-label'
+					inputClassName='flex'
 					placeholder='Enter name'
 					value={user.name}
 					onInput={handleChange}
@@ -47,6 +48,7 @@ export default function Registration() {
 					name='email'
 					labelText='Email'
 					labelClassName='registration-label'
+					inputClassName='flex'
 					placeholder='Enter email'
 					value={user.email}
 					onInput={handleChange}
@@ -56,6 +58,7 @@ export default function Registration() {
 					name='password'
 					labelText='Password'
 					labelClassName='registration-label'
+					inputClassName='flex'
 					placeholder='Enter password'
 					value={user.password}
 					onInput={handleChange}

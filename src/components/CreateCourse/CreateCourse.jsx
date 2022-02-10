@@ -6,7 +6,6 @@ import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
 
-import { mockedAuthorsList } from '../../constants';
 import './CreateCourse.css';
 import { useAppContext } from '../../AppContext';
 
@@ -16,8 +15,8 @@ export default function CreateCourse() {
 	const [courseTitle, setCourseTitle] = useState('');
 	const [courseDescription, setCourseDescription] = useState('');
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
-	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
-	const { coursesList, setCoursesList } = useAppContext();
+	const { coursesList, setCoursesList, authorsList, setAuthorsList } =
+		useAppContext();
 	const history = useHistory();
 
 	function handleAddAuthor(e, authorToBeAdded) {

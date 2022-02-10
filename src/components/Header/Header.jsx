@@ -24,7 +24,6 @@ export default function Header() {
 		axios
 			.delete(`${baseUrl}/logout`, { headers: headers })
 			.then(() => {
-				setIsAuthenticated(false);
 				localStorage.removeItem('authKey');
 				localStorage.removeItem('userName');
 				setIsAuthenticated(false);
@@ -36,7 +35,7 @@ export default function Header() {
 	useEffect(() => {
 		setUserName(localStorage.getItem('userName'));
 		setIsAuthenticated(localStorage.getItem('authKey'));
-	}, []);
+	});
 
 	return (
 		<header>

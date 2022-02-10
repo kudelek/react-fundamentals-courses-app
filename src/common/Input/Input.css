@@ -16,3 +16,7 @@ label {
     margin: 1em;
     padding: 0.5em;
 }
+
+.flex {
+    display: flex;
+}

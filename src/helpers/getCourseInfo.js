@@ -1,10 +1,8 @@
 import { getDuration } from './pipeDuration';
 import { dateGenerator } from './dateGenerator';
 import { getAuthors } from './getAuthors';
-import { mockedAuthorsList } from '../constants';
 
-export function getCourseInfo(props, params) {
-	const authorsList = mockedAuthorsList;
+export function getCourseInfo(props, authorsList, params) {
 	const courseInfoListOptions = [
 		{
 			param: 'authors',

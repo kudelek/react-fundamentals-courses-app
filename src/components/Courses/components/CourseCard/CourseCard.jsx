@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom';
+import { useAppContext } from '../../../../AppContext';
 
 import { Button } from '../../../../common/Button/Button';
 import Info from '../../../../common/Info/Info';
@@ -8,6 +9,7 @@ import './CourseCard.css';
 
 export default function CourseCard(props) {
 	const history = useHistory();
+	const { authorsList } = useAppContext();
 
 	function handleShowCourse() {
 		history.push(`/courses/${props.id}`);
@@ -21,11 +23,13 @@ export default function CourseCard(props) {
 			</div>
 			<div className='info'>
 				<div className='info-list'>
-					{getCourseInfo(props, ['authors', 'duration', 'creationDate']).map(
-						([title, content]) => (
-							<Info key={title} infoTitle={title} infoContent={content} />
-						)
-					)}
+					{getCourseInfo(props, authorsList, [
+						'authors',
+						'duration',
+						'creationDate',
+					]).map(([title, content]) => (
+						<Info key={title} infoTitle={title} infoContent={content} />
+					))}
 				</div>
 				<div className='info-button'>
 					<Button
