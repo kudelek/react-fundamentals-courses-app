@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 import './Input.css';
 
 export default function Input(props) {
-	Object.entries(props).map((prop) =>
-		console.log(
-			Object.values(prop)[0],
-			Object.values(prop)[1],
-			typeof Object.values(prop)[1]
-		)
-	);
 	const {
 		id,
 		className,
