@@ -1,3 +1,7 @@
+label {
+    margin: 1em;
+}
+
 .visually-hidden {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -8,12 +12,19 @@
     width: 1px;
 }
 
-.input-label {
+.input {
     margin: 1em;
     padding: 0.5em;
 }
 
-.input {
-    margin: 1em;
-    padding: 0.5em;
+.flex {
+    display: flex;
+}
+
+.width-30 {
+    width: 30%
+}
+
+.width-90 {
+    width: 90%;
 }

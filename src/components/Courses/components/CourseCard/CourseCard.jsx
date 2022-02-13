@@ -1,24 +1,20 @@
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import { Button } from '../../../../common/Button/Button';
-import { getDuration } from '../../../../helpers/pipeDuration';
-import { dateGenerator } from '../../../../helpers/dateGenerator';
+import Info from '../../../../common/Info/Info';
+import { getCourseInfo } from '../../../../helpers/getCourseInfo';
+import { useAppContext } from '../../../../AppContext';
 
 import './CourseCard.css';
 
 export default function CourseCard(props) {
-	function Info(props) {
-		return (
-			<div className='info-item'>
-				<div className='info-title'>{props.infoTitle}</div>
-				<div className='info-content'>{props.infoContent}</div>
-			</div>
-		);
-	}
+	const history = useHistory();
+	const { authorsList } = useAppContext();
 
-	const courseInfo = [
-		['Authors: ', props.authors],
-		['Duration: ', `${getDuration(props.duration)} hours`],
-		['Created: ', dateGenerator(props.creationDate)],
-	];
+	function handleShowCourse() {
+		history.push(`/courses/${props.id}`);
+	}
 
 	return (
 		<section className='course-card' id={props.id}>
@@ -28,7 +24,11 @@ export default function CourseCard(props) {
 			</div>
 			<div className='info'>
 				<div className='info-list'>
-					{courseInfo.map(([title, content]) => (
+					{getCourseInfo(props, authorsList, [
+						'authors',
+						'duration',
+						'creationDate',
+					]).map(([title, content]) => (
 						<Info key={title} infoTitle={title} infoContent={content} />
 					))}
 				</div>
@@ -36,10 +36,19 @@ export default function CourseCard(props) {
 					<Button
 						className='show-course-button'
 						buttonText='Show course'
-						onClick={(e) => console.log(e.target.innerHTML, 'button clicked!')}
+						onClick={handleShowCourse}
 					/>
 				</div>
 			</div>
 		</section>
 	);
 }
+
+CourseCard.propTypes = {
+	id: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
+	duration: PropTypes.number.isRequired,
+	creationDate: PropTypes.string.isRequired,
+	authors: PropTypes.array.isRequired,
+};

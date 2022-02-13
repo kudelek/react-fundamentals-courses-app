@@ -1,0 +1,33 @@
+.main-container {
+    padding-top: 3em;
+}
+
+.link {
+    margin-left: 2em;
+    text-decoration: none;
+    color: black;
+}
+
+h2 {
+    text-align: center;
+    margin: 2em;
+}
+
+.course-description {
+    width: 70%;
+    padding: 1em;
+    text-align: justify;
+}
+
+.courseinfo {
+    display: flex;
+    flex-flow: row;
+}
+
+.information {
+    padding: 1em;
+}
+
+.info-item {
+    padding: 0.3em;
+}

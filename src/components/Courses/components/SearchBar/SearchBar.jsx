@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { Button } from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
@@ -35,3 +36,7 @@ export default function SearchBar({ setSearchQuery }) {
 		</div>
 	);
 }
+
+SearchBar.propTypes = {
+	setSearchQuery: PropTypes.func,
+};

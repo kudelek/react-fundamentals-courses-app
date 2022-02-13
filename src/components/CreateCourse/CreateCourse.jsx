@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 
 import { Button } from '../../common/Button/Button';
@@ -6,19 +7,17 @@ import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
 
 import './CreateCourse.css';
+import { useAppContext } from '../../AppContext';
 
-export default function CreateCourse({
-	authorsList,
-	setAuthorsList,
-	coursesList,
-	setCoursesList,
-	setCreateCourseMode,
-}) {
+export default function CreateCourse() {
 	const [courseAuthorsList, setCourseAuthorsList] = useState([]);
-	const [courseDuration, setCourseDuration] = useState(0);
+	const [courseDuration, setCourseDuration] = useState('');
 	const [courseTitle, setCourseTitle] = useState('');
 	const [courseDescription, setCourseDescription] = useState('');
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
+	const { coursesList, setCoursesList, authorsList, setAuthorsList } =
+		useAppContext();
+	const history = useHistory();
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
@@ -46,6 +45,13 @@ export default function CreateCourse({
 			alert('Author name must be at least 2 characters long.');
 			return;
 		}
+		if (
+			authorsList.filter((author) => author.name === authorToBeCreated).length >
+			0
+		) {
+			alert('Author already exists!');
+			return;
+		}
 		setAuthorsList([
 			...authorsList,
 			{
@@ -64,7 +70,7 @@ export default function CreateCourse({
 			alert('Authors need to be added.');
 			return;
 		}
-		if (courseDuration === 0) {
+		if (parseInt(courseDuration, 10) === 0) {
 			alert('Course duration must be greater than 0.');
 			return;
 		}
@@ -83,7 +89,7 @@ export default function CreateCourse({
 				authors: courseAuthorsList.map((author) => author.id),
 			},
 		]);
-		setCreateCourseMode(false);
+		history.push('/courses');
 	}
 
 	return (
@@ -92,11 +98,12 @@ export default function CreateCourse({
 				<Input
 					id='course-title-input'
 					className='course-title'
+					inputClassName='flex width-90'
 					value={courseTitle}
 					onInput={(e) => setCourseTitle(e.target.value)}
 					placeholder='Enter title...'
-					labelClassName='course-title-input-label'
 					labelText='Title'
+					label
 					required
 				/>
 				<div className='create-course'>
@@ -126,6 +133,7 @@ export default function CreateCourse({
 						onInput={(e) => setAuthorToBeCreated(e.target.value)}
 						placeholder='Enter author name...'
 						labelClassName='create-author-input-label'
+						inputClassName='flex width-90'
 						labelText='Author name'
 					/>
 					<Button
@@ -138,10 +146,12 @@ export default function CreateCourse({
 						id='course-duration-input'
 						className='course-duration'
 						labelClassName='course-duration-input-label'
+						inputClassName='flex width-90'
 						value={courseDuration}
 						onInput={(e) => setCourseDuration(e.target.value)}
 						placeholder='Enter duration in minutes...'
 						type='number'
+						min='1'
 						labelText='Duration'
 						required
 					/>

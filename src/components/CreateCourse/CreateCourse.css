@@ -13,10 +13,6 @@
     margin-left: 0;
 }
 
-.course-title-input-label {
-    margin: 0;
-}
-
 .create-course {
     display: flex;
     flex-flow: row-reverse;
@@ -34,6 +30,7 @@
     display: flex;
     flex-flow: column;
     margin: 1em;
+    width: 95%;
 }
 
 .description-label {
