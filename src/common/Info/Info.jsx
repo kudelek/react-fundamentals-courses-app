@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import './Info.css';
 
 export default function Info(props) {
@@ -23,3 +25,9 @@ export default function Info(props) {
 		</div>
 	);
 }
+
+Info.propTypes = {
+	infoTitle: PropTypes.string.isRequired,
+	infoContent: PropTypes.string.isRequired,
+	multiline: PropTypes.string,
+};

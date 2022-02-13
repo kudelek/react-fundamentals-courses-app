@@ -1,9 +1,10 @@
 import { useHistory } from 'react-router-dom';
-import { useAppContext } from '../../../../AppContext';
+import PropTypes from 'prop-types';
 
 import { Button } from '../../../../common/Button/Button';
 import Info from '../../../../common/Info/Info';
 import { getCourseInfo } from '../../../../helpers/getCourseInfo';
+import { useAppContext } from '../../../../AppContext';
 
 import './CourseCard.css';
 
@@ -42,3 +43,12 @@ export default function CourseCard(props) {
 		</section>
 	);
 }
+
+CourseCard.propTypes = {
+	id: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
+	duration: PropTypes.number.isRequired,
+	creationDate: PropTypes.string.isRequired,
+	authors: PropTypes.array.isRequired,
+};
