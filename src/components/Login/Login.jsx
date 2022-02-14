@@ -48,6 +48,7 @@ export default function Login() {
 			<form className='form' onSubmit={handleLogin}>
 				<h2>Login</h2>
 				<Input
+					id='email'
 					name='email'
 					labelText='Email'
 					inputClassName='flex'
@@ -59,6 +60,7 @@ export default function Login() {
 					required
 				/>
 				<Input
+					id='password'
 					name='password'
 					labelText='Password'
 					inputClassName='flex'

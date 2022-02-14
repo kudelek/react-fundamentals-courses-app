@@ -42,6 +42,7 @@ export default function Registration() {
 			<form className='form' onSubmit={handleRegister}>
 				<h2>Registration</h2>
 				<Input
+					id='name'
 					name='name'
 					labelText='Name'
 					inputClassName='flex'
@@ -51,6 +52,7 @@ export default function Registration() {
 					label
 				/>
 				<Input
+					id='email'
 					name='email'
 					labelText='Email'
 					inputClassName='flex'
@@ -61,6 +63,7 @@ export default function Registration() {
 					label
 				/>
 				<Input
+					id='password'
 					name='password'
 					labelText='Password'
 					inputClassName='flex'

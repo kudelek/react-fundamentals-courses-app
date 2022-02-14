@@ -63,7 +63,11 @@ export default function CreateCourse() {
 	}
 
 	function handleCreateCourse(e) {
-		let creationDate = new Date();
+		let creationDate = new Date().toLocaleDateString('en-GB', {
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
+		});
 
 		e.preventDefault();
 		if (courseAuthorsList.length === 0) {
@@ -85,7 +89,7 @@ export default function CreateCourse() {
 				title: courseTitle,
 				description: courseDescription,
 				creationDate: creationDate,
-				duration: courseDuration,
+				duration: +courseDuration,
 				authors: courseAuthorsList.map((author) => author.id),
 			},
 		]);
