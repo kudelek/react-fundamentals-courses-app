@@ -28,8 +28,6 @@ export default function Login() {
 			.then((response) => {
 				const authKey = response.data.result;
 				setIsAuthenticated(true);
-				localStorage.setItem('authKey', authKey);
-				localStorage.setItem('userName', response.data.user.name);
 				dispatch(
 					logUserIn({ ...user, name: response.data.user.name, token: authKey })
 				);
