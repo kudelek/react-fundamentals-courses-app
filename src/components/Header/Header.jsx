@@ -1,18 +1,16 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useAppContext } from '../../AppContext';
 
 import { Button } from '../../common/Button/Button';
+import { logOut } from '../../services';
 import { store } from '../../store';
 import { logUserOut } from '../../store/user/actionCreators';
 import { Logo } from './components/Logo/Logo';
 
 import './Header.css';
-
-const baseUrl = 'http://localhost:3000';
 
 export default function Header() {
 	const userName = useSelector((state) => state.user.name);
@@ -21,26 +19,15 @@ export default function Header() {
 	const dispatch = useDispatch();
 
 	function handleLogout() {
-		const headers = {
-			Authorization: localStorage.getItem('token'),
-		};
+		const token = localStorage.getItem('token');
 
-		axios
-			.delete(`${baseUrl}/logout`, { headers })
-			.then(() => {
-				localStorage.clear();
-				setIsAuthenticated(false);
-				dispatch(logUserOut());
-				console.log(store.getState());
-				history.push('/login');
-			})
-			.catch((e) => {
-				alert(
-					e.response.data.errors
-						? e.response.data.errors.join('\n')
-						: e.response.data.result ?? 'Something went wrong'
-				);
-			});
+		logOut(token).then(() => {
+			localStorage.clear();
+			setIsAuthenticated(false);
+			dispatch(logUserOut());
+			console.log(store.getState());
+			history.push('/login');
+		});
 	}
 
 	useEffect(() => {

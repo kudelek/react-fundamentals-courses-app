@@ -14,3 +14,18 @@ export const logIn = (user) => {
 			);
 		});
 };
+
+export const logOut = (token) => {
+	const headers = { Authorization: token };
+	return axios
+		.delete(`${baseURL}/logout`, {
+			headers,
+		})
+		.catch((e) => {
+			alert(
+				e.response.data.errors
+					? e.response.data.errors.join('\n')
+					: e.response.data.result ?? 'Something went wrong'
+			);
+		});
+};

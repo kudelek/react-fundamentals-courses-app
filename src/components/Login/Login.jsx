@@ -8,8 +8,6 @@ import Input from '../../common/Input/Input';
 import { logIn } from '../../services';
 import { logUserIn } from '../../store/user/actionCreators';
 
-import './Login.css';
-
 export default function Login() {
 	const [user, setUser] = useState({ email: '', password: '' });
 	const { setIsAuthenticated } = useAppContext();
@@ -21,12 +19,11 @@ export default function Login() {
 
 		logIn(user).then((response) => {
 			const token = response.data.result;
+			const name = response.data.user.name;
 			setIsAuthenticated(true);
-			localStorage.setItem('userName', response.data.user.name);
+			localStorage.setItem('userName', name);
 			localStorage.setItem('token', token);
-			dispatch(
-				logUserIn({ ...user, name: response.data.user.name, token: token })
-			);
+			dispatch(logUserIn({ ...user, name: name, token: token }));
 			history.push('/courses');
 		});
 	}

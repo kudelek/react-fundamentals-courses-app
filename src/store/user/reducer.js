@@ -16,6 +16,7 @@ export default function userReducer(
 			};
 		}
 		case 'logUserOut': {
+			console.log(payload);
 			return {
 				...state,
 				isAuth: false,
