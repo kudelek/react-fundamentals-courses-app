@@ -26,10 +26,10 @@ export default function Login() {
 		axios
 			.post(`${baseUrl}/login`, user)
 			.then((response) => {
-				const authKey = response.data.result;
+				const token = response.data.result;
 				setIsAuthenticated(true);
 				dispatch(
-					logUserIn({ ...user, name: response.data.user.name, token: authKey })
+					logUserIn({ ...user, name: response.data.user.name, token: token })
 				);
 				history.push('/courses');
 			})

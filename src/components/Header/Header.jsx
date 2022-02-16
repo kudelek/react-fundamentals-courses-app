@@ -22,13 +22,13 @@ export default function Header() {
 
 	function handleLogout() {
 		const headers = {
-			Authorization: localStorage.getItem('authKey'),
+			Authorization: localStorage.getItem('token'),
 		};
 
 		axios
 			.delete(`${baseUrl}/logout`, { headers })
 			.then(() => {
-				localStorage.removeItem('authKey');
+				localStorage.removeItem('token');
 				localStorage.removeItem('userName');
 				setIsAuthenticated(false);
 				dispatch(logUserOut());
@@ -45,7 +45,7 @@ export default function Header() {
 	}
 
 	useEffect(() => {
-		setIsAuthenticated(localStorage.getItem('authKey'));
+		setIsAuthenticated(localStorage.getItem('token'));
 	});
 
 	return (

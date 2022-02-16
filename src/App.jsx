@@ -16,7 +16,7 @@ import './App.css';
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(
-		localStorage.getItem('authKey')
+		localStorage.getItem('token')
 	);
 	const [coursesList, setCoursesList] = useState(mockedCoursesList);
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);

@@ -7,14 +7,14 @@ export default function userReducer(
 	switch (type) {
 		case 'logUserIn': {
 			localStorage.setItem('userName', payload.name);
-			localStorage.setItem('authKey', payload.authKey);
+			localStorage.setItem('token', payload.token);
 			console.log(payload);
 			return {
 				...state,
 				isAuth: true,
 				name: payload.name,
 				email: payload.email,
-				token: payload.authKey,
+				token: payload.token,
 			};
 		}
 		case 'logUserOut': {

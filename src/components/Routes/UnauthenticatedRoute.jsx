@@ -3,10 +3,10 @@ import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 import PropTypes from 'prop-types';
 
 export default function UnAuthenticatedRoute({ children, ...rest }) {
-	const authKey = localStorage.getItem('authKey');
+	const token = localStorage.getItem('token');
 
 	return (
-		<Route {...rest}>{!authKey ? children : <Redirect to='/courses' />}</Route>
+		<Route {...rest}>{!token ? children : <Redirect to='/courses' />}</Route>
 	);
 }
 
