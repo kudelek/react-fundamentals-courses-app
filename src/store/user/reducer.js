@@ -1,3 +1,5 @@
+import { LOG_USER_IN, LOG_USER_OUT } from './actionTypes';
+
 const userInitialState = { isAuth: false, name: '', email: '', token: '' };
 
 export default function userReducer(
@@ -5,7 +7,7 @@ export default function userReducer(
 	{ type, payload }
 ) {
 	switch (type) {
-		case 'logUserIn': {
+		case LOG_USER_IN: {
 			console.log(payload);
 			return {
 				...state,
@@ -15,7 +17,7 @@ export default function userReducer(
 				token: payload.token,
 			};
 		}
-		case 'logUserOut': {
+		case LOG_USER_OUT: {
 			console.log(payload);
 			return {
 				...state,
