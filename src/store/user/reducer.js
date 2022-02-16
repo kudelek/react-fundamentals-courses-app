@@ -6,8 +6,6 @@ export default function userReducer(
 ) {
 	switch (type) {
 		case 'logUserIn': {
-			localStorage.setItem('userName', payload.name);
-			localStorage.setItem('token', payload.token);
 			console.log(payload);
 			return {
 				...state,
@@ -18,7 +16,6 @@ export default function userReducer(
 			};
 		}
 		case 'logUserOut': {
-			localStorage.clear();
 			return {
 				...state,
 				isAuth: false,

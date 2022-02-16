@@ -1,18 +1,14 @@
-import axios from 'axios';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { useAppContext } from '../../AppContext';
 
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
-import { store } from '../../store';
+import { logIn } from '../../services';
 import { logUserIn } from '../../store/user/actionCreators';
 
 import './Login.css';
-
-const baseUrl = 'http://localhost:3000';
 
 export default function Login() {
 	const [user, setUser] = useState({ email: '', password: '' });
@@ -23,23 +19,16 @@ export default function Login() {
 	function handleLogin(e) {
 		e.preventDefault();
 
-		axios
-			.post(`${baseUrl}/login`, user)
-			.then((response) => {
-				const token = response.data.result;
-				setIsAuthenticated(true);
-				dispatch(
-					logUserIn({ ...user, name: response.data.user.name, token: token })
-				);
-				history.push('/courses');
-			})
-			.catch((e) => {
-				alert(
-					e.response.data.errors
-						? e.response.data.errors.join('\n')
-						: e.response.data.result ?? 'Something went wrong'
-				);
-			});
+		logIn(user).then((response) => {
+			const token = response.data.result;
+			setIsAuthenticated(true);
+			localStorage.setItem('userName', response.data.user.name);
+			localStorage.setItem('token', token);
+			dispatch(
+				logUserIn({ ...user, name: response.data.user.name, token: token })
+			);
+			history.push('/courses');
+		});
 	}
 
 	function handleChange(e) {

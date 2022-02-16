@@ -28,8 +28,7 @@ export default function Header() {
 		axios
 			.delete(`${baseUrl}/logout`, { headers })
 			.then(() => {
-				localStorage.removeItem('token');
-				localStorage.removeItem('userName');
+				localStorage.clear();
 				setIsAuthenticated(false);
 				dispatch(logUserOut());
 				console.log(store.getState());
