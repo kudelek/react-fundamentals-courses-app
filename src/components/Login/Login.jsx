@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory, Link } from 'react-router-dom';
 import { useAppContext } from '../../AppContext';
 
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
+import { store } from '../../store';
+import { logUserIn } from '../../store/user/actionCreators';
 
 import './Login.css';
 
@@ -15,6 +18,7 @@ export default function Login() {
 	const [user, setUser] = useState({ email: '', password: '' });
 	const { setIsAuthenticated } = useAppContext();
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	function handleLogin(e) {
 		e.preventDefault();
@@ -26,6 +30,9 @@ export default function Login() {
 				setIsAuthenticated(true);
 				localStorage.setItem('authKey', authKey);
 				localStorage.setItem('userName', response.data.user.name);
+				dispatch(
+					logUserIn({ ...user, name: response.data.user.name, token: authKey })
+				);
 				history.push('/courses');
 			})
 			.catch((e) => {

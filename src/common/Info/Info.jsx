@@ -29,5 +29,5 @@ export default function Info(props) {
 Info.propTypes = {
 	infoTitle: PropTypes.string.isRequired,
 	infoContent: PropTypes.string.isRequired,
-	multiline: PropTypes.string,
+	multiline: PropTypes.array,
 };

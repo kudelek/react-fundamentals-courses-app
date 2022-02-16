@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useAppContext } from '../../AppContext';
 
 import { Button } from '../../common/Button/Button';
+import { store } from '../../store';
+import { logUserOut } from '../../store/user/actionCreators';
 import { Logo } from './components/Logo/Logo';
 
 import './Header.css';
@@ -11,10 +15,10 @@ import './Header.css';
 const baseUrl = 'http://localhost:3000';
 
 export default function Header() {
-	const [userName, setUserName] = useState('');
+	const userName = useSelector((state) => state.user.name);
 	const { isAuthenticated, setIsAuthenticated } = useAppContext();
-
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	function handleLogout() {
 		const headers = {
@@ -27,6 +31,8 @@ export default function Header() {
 				localStorage.removeItem('authKey');
 				localStorage.removeItem('userName');
 				setIsAuthenticated(false);
+				dispatch(logUserOut());
+				console.log(store.getState());
 				history.push('/login');
 			})
 			.catch((e) => {
@@ -39,7 +45,6 @@ export default function Header() {
 	}
 
 	useEffect(() => {
-		setUserName(localStorage.getItem('userName'));
 		setIsAuthenticated(localStorage.getItem('authKey'));
 	});
 
