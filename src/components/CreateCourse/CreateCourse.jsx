@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
-//import { addCourse } from '../../store/courses/actionCreators';
+import { addCourse } from '../../store/courses/actionCreators';
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
@@ -11,7 +11,8 @@ import { useAppContext } from '../../AppContext';
 import { addAuthor, removeAuthor } from '../../store/authors/actionCreators';
 
 import './CreateCourse.css';
-import { addCourse } from '../../services';
+import axios from 'axios';
+import { addCourse1 } from '../../services';
 
 export default function CreateCourse() {
 	const courseAuthors = useSelector((state) => state.authors.courseAuthors);
@@ -96,8 +97,23 @@ export default function CreateCourse() {
 			alert('Course description must be at least 2 characters long.');
 			return;
 		}
+		const headers = { Authorization: localStorage.getItem('token') };
+		const baseURL = 'http://localhost:3000';
+		// axios
+		// 	.put(`${baseURL}/courses/${course.id}`, course, { headers })
+		// 	.then((response) => response)
+		// 	.catch((e) => {
+		// 		alert(
+		// 			e.response.data.errors
+		// 				? e.response.data.errors.join('\n')
+		// 				: e.response.data.result ?? 'Something went wrong'
+		// 		);
+		// 	});
 		//dispatch(addCourse(course));
-		addCourse(course);
+
+		addCourse1(course).then((response) =>
+			dispatch(addCourse(response.data.result))
+		);
 
 		//history.push('/courses');
 	}

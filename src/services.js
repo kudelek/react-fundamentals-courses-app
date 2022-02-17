@@ -43,11 +43,19 @@ export const loadCourses = () => {
 		});
 };
 
-export const addCourse = (course) => {
+export const addCourse1 = (course) => {
 	const headers = { Authorization: localStorage.getItem('token') };
 	console.log(headers);
+	console.log('course: ', course);
+	const c = {
+		title: 'string',
+		description: 'string',
+		duration: 5555,
+		authors: ['string'],
+	};
+
 	return axios
-		.put(`${baseURL}/courses/${course.id}`, course, { headers })
+		.put(`${baseURL}/courses/${course.id}`, c, { headers })
 		.then((response) => response)
 		.catch((e) => {
 			alert(
