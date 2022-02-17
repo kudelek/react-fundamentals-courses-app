@@ -11,14 +11,13 @@ import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Routes/UnauthenticatedRoute';
 import { AppContext } from './AppContext';
 
-import { mockedAuthorsList, mockedCoursesList } from './constants';
+import { mockedAuthorsList } from './constants';
 import './App.css';
 
 function App() {
 	const [isAuthenticated, setIsAuthenticated] = useState(
 		localStorage.getItem('token')
 	);
-	const [coursesList, setCoursesList] = useState(mockedCoursesList);
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 
 	return (
@@ -28,8 +27,6 @@ function App() {
 					value={{
 						isAuthenticated,
 						setIsAuthenticated,
-						coursesList,
-						setCoursesList,
 						authorsList,
 						setAuthorsList,
 					}}

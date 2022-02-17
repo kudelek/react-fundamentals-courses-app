@@ -1,19 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
+import { loadAuthors, loadCourses } from '../../services';
+import { saveCourses } from '../../store/courses/actionCreators';
+import { saveAuthors } from '../../store/authors/actionCreators';
 
 import './Courses.css';
-import { useAppContext } from '../../AppContext';
 
 export default function Courses() {
 	const [searchQuery, setSearchQuery] = useState('');
-	const { coursesList } = useAppContext();
+	const dispatch = useDispatch();
+	const courses = useSelector((state) => state.courses);
 	const history = useHistory();
 
-	const filteredCourses = filterCourses(coursesList, searchQuery);
+	const filteredCourses = filterCourses(courses, searchQuery);
 
 	function filterCourses(courses, query) {
 		if (!query) {
@@ -33,6 +37,15 @@ export default function Courses() {
 	function handleAddCourse() {
 		history.push('/courses/add');
 	}
+
+	useEffect(() => {
+		loadCourses().then((response) => {
+			dispatch(saveCourses(response.data.result));
+		});
+		loadAuthors().then((response) => {
+			dispatch(saveAuthors(response.data.result));
+		});
+	}, [dispatch]);
 
 	return (
 		<>

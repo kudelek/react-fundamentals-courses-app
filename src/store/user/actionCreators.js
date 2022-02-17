@@ -1,8 +1,11 @@
-export function logUserIn(user) {
-	console.log('user: ', user);
-	return { type: 'logUserIn', payload: user };
-}
+import { LOG_USER_IN, LOG_USER_OUT } from './actionTypes';
 
-export function logUserOut(user) {
-	return { type: 'logUserOut', payload: user };
-}
+export const logUserIn = (user) => ({
+	type: LOG_USER_IN,
+	payload: user,
+});
+
+export const logUserOut = (user) => ({
+	type: LOG_USER_OUT,
+	payload: user,
+});

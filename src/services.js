@@ -29,3 +29,44 @@ export const logOut = (token) => {
 			);
 		});
 };
+
+export const loadCourses = () => {
+	return axios
+		.get(`${baseURL}/courses/all`)
+		.then((response) => response)
+		.catch((e) => {
+			alert(
+				e.response.data.errors
+					? e.response.data.errors.join('\n')
+					: e.response.data.result ?? 'Something went wrong'
+			);
+		});
+};
+
+export const addCourse = (course) => {
+	const headers = { Authorization: localStorage.getItem('token') };
+	console.log(headers);
+	return axios
+		.put(`${baseURL}/courses/${course.id}`, course, { headers })
+		.then((response) => response)
+		.catch((e) => {
+			alert(
+				e.response.data.errors
+					? e.response.data.errors.join('\n')
+					: e.response.data.result ?? 'Something went wrong'
+			);
+		});
+};
+
+export const loadAuthors = () => {
+	return axios
+		.get(`${baseURL}/authors/all`)
+		.then((response) => response)
+		.catch((e) => {
+			alert(
+				e.response.data.errors
+					? e.response.data.errors.join('\n')
+					: e.response.data.result ?? 'Something went wrong'
+			);
+		});
+};

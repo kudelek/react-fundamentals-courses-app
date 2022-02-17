@@ -1,41 +1,53 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
+//import { addCourse } from '../../store/courses/actionCreators';
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
+import { useAppContext } from '../../AppContext';
+import { addAuthor, removeAuthor } from '../../store/authors/actionCreators';
 
 import './CreateCourse.css';
-import { useAppContext } from '../../AppContext';
+import { addCourse } from '../../services';
 
 export default function CreateCourse() {
-	const [courseAuthorsList, setCourseAuthorsList] = useState([]);
-	const [courseDuration, setCourseDuration] = useState('');
-	const [courseTitle, setCourseTitle] = useState('');
-	const [courseDescription, setCourseDescription] = useState('');
+	const courseAuthors = useSelector((state) => state.authors.courseAuthors);
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
-	const { coursesList, setCoursesList, authorsList, setAuthorsList } =
-		useAppContext();
+	const [course, setCourse] = useState({
+		authors: [],
+		creationDate: '',
+		description: '',
+		duration: '',
+		id: uuid(),
+		title: '',
+	});
+	const { authorsList, setAuthorsList } = useAppContext();
+	const dispatch = useDispatch();
 	const history = useHistory();
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
-		setCourseAuthorsList([
-			...courseAuthorsList,
-			{ id: authorToBeAdded.id, name: authorToBeAdded.name },
-		]);
+		dispatch(addAuthor(authorToBeAdded));
+		setCourse(
+			{
+				...course,
+				authors: [
+					...courseAuthors,
+					{ id: authorToBeAdded.id, name: authorToBeAdded.name },
+				].map((courseAuthor) => courseAuthor.id),
+			},
+			console.log(course.authors)
+		);
 	}
 
 	function handleDeleteAuthor(e, authorToBeDeleted) {
 		e.preventDefault();
-		for (let author of courseAuthorsList)
+		for (let author of courseAuthors)
 			if (author.id === authorToBeDeleted.id) {
-				setCourseAuthorsList(
-					courseAuthorsList.filter(
-						(author) => author.id !== authorToBeDeleted.id
-					)
-				);
+				dispatch(removeAuthor(authorToBeDeleted));
 			}
 	}
 
@@ -69,42 +81,43 @@ export default function CreateCourse() {
 			year: 'numeric',
 		});
 
+		setCourse({ ...course, creationDate: creationDate }, console.log(course));
+
 		e.preventDefault();
-		if (courseAuthorsList.length === 0) {
+		if (course.authors.length === 0) {
 			alert('Authors need to be added.');
 			return;
 		}
-		if (parseInt(courseDuration, 10) === 0) {
+		if (parseInt(course.duration, 10) === 0) {
 			alert('Course duration must be greater than 0.');
 			return;
 		}
-		if (courseDescription.length < 2) {
+		if (course.description.length < 2) {
 			alert('Course description must be at least 2 characters long.');
 			return;
 		}
-		setCoursesList([
-			...coursesList,
-			{
-				id: uuid(),
-				title: courseTitle,
-				description: courseDescription,
-				creationDate: creationDate,
-				duration: +courseDuration,
-				authors: courseAuthorsList.map((author) => author.id),
-			},
-		]);
-		history.push('/courses');
+		//dispatch(addCourse(course));
+		addCourse(course);
+
+		//history.push('/courses');
+	}
+
+	function handleChange(e) {
+		const name = e.target.name;
+		const value = e.target.value;
+		setCourse({ ...course, [name]: value });
 	}
 
 	return (
 		<form onSubmit={handleCreateCourse}>
 			<div className='title-and-create'>
 				<Input
+					name='title'
 					id='course-title-input'
 					className='course-title'
 					inputClassName='flex width-90'
-					value={courseTitle}
-					onInput={(e) => setCourseTitle(e.target.value)}
+					value={course.title}
+					onInput={handleChange}
 					placeholder='Enter title...'
 					labelText='Title'
 					label
@@ -119,11 +132,12 @@ export default function CreateCourse() {
 					Description
 				</label>
 				<textarea
+					name='description'
 					id='course-description'
 					className='description-textarea'
 					placeholder='Enter description...'
-					value={courseDescription}
-					onInput={(e) => setCourseDescription(e.target.value)}
+					value={course.description}
+					onInput={handleChange}
 					required
 				/>
 			</div>
@@ -131,6 +145,7 @@ export default function CreateCourse() {
 				<div className='create-author-and-duration'>
 					<h2>Add author</h2>
 					<Input
+						name='authorToBeCreated'
 						id='create-author-input'
 						className='create-author'
 						value={authorToBeCreated}
@@ -147,12 +162,13 @@ export default function CreateCourse() {
 					/>
 					<h2>Duration</h2>
 					<Input
+						name='duration'
 						id='course-duration-input'
 						className='course-duration'
 						labelClassName='course-duration-input-label'
 						inputClassName='flex width-90'
-						value={courseDuration}
-						onInput={(e) => setCourseDuration(e.target.value)}
+						value={course.duration}
+						onInput={handleChange}
 						placeholder='Enter duration in minutes...'
 						type='number'
 						min='1'
@@ -160,7 +176,7 @@ export default function CreateCourse() {
 						required
 					/>
 					<div className='course-duration-display'>
-						Duration: <span>{getDuration(courseDuration)}</span> hours
+						Duration: <span>{getDuration(course.duration)}</span> hours
 					</div>
 				</div>
 				<div className='course-authors-lists'>
@@ -171,7 +187,7 @@ export default function CreateCourse() {
 						<>
 							{authorsList
 								.filter(
-									(i) => !courseAuthorsList.filter((y) => y.id === i.id).length
+									(i) => !courseAuthors.filter((y) => y.id === i.id).length
 								)
 								.map((author) => (
 									<div key={author.id} className='course-authors-add'>
@@ -186,11 +202,11 @@ export default function CreateCourse() {
 						</>
 					)}
 					<h2>Course authors</h2>
-					{courseAuthorsList.length === 0 ? (
+					{courseAuthors.length === 0 ? (
 						<div>Course author list is empty</div>
 					) : (
 						<>
-							{courseAuthorsList.map((author) => (
+							{courseAuthors.map((author) => (
 								<div key={author.id} className='course-authors-delete'>
 									<div className='course-author-name'>{author.name}</div>
 									<Button

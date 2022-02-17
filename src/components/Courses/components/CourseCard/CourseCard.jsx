@@ -1,16 +1,16 @@
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Button } from '../../../../common/Button/Button';
 import Info from '../../../../common/Info/Info';
 import { getCourseInfo } from '../../../../helpers/getCourseInfo';
-import { useAppContext } from '../../../../AppContext';
 
 import './CourseCard.css';
 
 export default function CourseCard(props) {
+	const authors = useSelector((state) => state.authors.authors);
 	const history = useHistory();
-	const { authorsList } = useAppContext();
 
 	function handleShowCourse() {
 		history.push(`/courses/${props.id}`);
@@ -24,7 +24,7 @@ export default function CourseCard(props) {
 			</div>
 			<div className='info'>
 				<div className='info-list'>
-					{getCourseInfo(props, authorsList, [
+					{getCourseInfo(props, authors, [
 						'authors',
 						'duration',
 						'creationDate',
