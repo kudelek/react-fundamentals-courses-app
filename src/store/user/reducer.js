@@ -8,7 +8,6 @@ export default function userReducer(
 ) {
 	switch (type) {
 		case LOG_USER_IN: {
-			console.log(payload);
 			return {
 				...state,
 				isAuth: true,
@@ -18,7 +17,6 @@ export default function userReducer(
 			};
 		}
 		case LOG_USER_OUT: {
-			console.log(payload);
 			return {
 				...state,
 				isAuth: false,

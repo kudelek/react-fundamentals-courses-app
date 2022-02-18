@@ -35,16 +35,13 @@ export default function CreateCourse() {
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
 		dispatch(addAuthor(authorToBeAdded));
-		setCourse(
-			{
-				...course,
-				authors: [
-					...courseAuthors,
-					{ id: authorToBeAdded.id, name: authorToBeAdded.name },
-				].map((courseAuthor) => courseAuthor.id),
-			},
-			console.log(course.authors)
-		);
+		setCourse({
+			...course,
+			authors: [
+				...courseAuthors,
+				{ id: authorToBeAdded.id, name: authorToBeAdded.name },
+			].map((courseAuthor) => courseAuthor.id),
+		});
 	}
 
 	function handleDeleteAuthor(e, authorToBeDeleted) {
@@ -72,14 +69,6 @@ export default function CreateCourse() {
 	}
 
 	function handleCreateCourse(e) {
-		let creationDate = new Date().toLocaleDateString('en-GB', {
-			day: '2-digit',
-			month: '2-digit',
-			year: 'numeric',
-		});
-
-		setCourse({ ...course, creationDate: creationDate }, console.log(course));
-
 		e.preventDefault();
 		if (course.authors.length === 0) {
 			alert('Authors need to be added.');
