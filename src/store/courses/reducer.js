@@ -1,4 +1,4 @@
-import { ADD_COURSE, SAVE_COURSES } from './actionTypes';
+import { ADD_COURSE, DELETE_COURSE, SAVE_COURSES } from './actionTypes';
 
 const coursesInitialState = [];
 
@@ -12,7 +12,8 @@ export default function coursesReducer(
 		}
 		case ADD_COURSE: {
 			console.log('courses payload: ', payload);
-			console.log([
+			console.log('state before: ', state);
+			console.log('state after: ', [
 				...state,
 				{
 					authors: payload.authors,
@@ -34,6 +35,9 @@ export default function coursesReducer(
 					duration: +payload.duration,
 				},
 			];
+		}
+		case DELETE_COURSE: {
+			return state.filter((course) => course.id !== payload.id);
 		}
 		default:
 			return state;

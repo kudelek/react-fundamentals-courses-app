@@ -1,15 +1,17 @@
 import { Link, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Info from '../../common/Info/Info';
-import { useAppContext } from '../../AppContext';
 import { getCourseInfo } from '../../helpers/getCourseInfo';
+import { selectAuthors, selectCourses } from '../../store/selectors';
 
 import './CourseInfo.css';
 
 export default function CourseInfo() {
 	const { courseId } = useParams();
-	const { coursesList, authorsList } = useAppContext();
-	const course = coursesList.find((course) => course.id === courseId);
+	const courses = useSelector(selectCourses);
+	const authors = useSelector(selectAuthors);
+	const course = courses.find((course) => course.id === courseId);
 
 	return (
 		<div className='main-container'>
@@ -20,7 +22,7 @@ export default function CourseInfo() {
 			<div className='courseinfo'>
 				<span className='course-description'>{course.description}</span>
 				<div className='information'>
-					{getCourseInfo(course, authorsList, [
+					{getCourseInfo(course, authors, [
 						'id',
 						'duration',
 						'creationDate',

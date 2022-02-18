@@ -1,20 +1,17 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-import { loadAuthors, loadCourses } from '../../services';
-import { saveCourses } from '../../store/courses/actionCreators';
-import { saveAuthors } from '../../store/authors/actionCreators';
+import { selectCourses } from '../../store/selectors';
 
 import './Courses.css';
 
 export default function Courses() {
 	const [searchQuery, setSearchQuery] = useState('');
-	const dispatch = useDispatch();
-	const courses = useSelector((state) => state.courses);
+	const courses = useSelector(selectCourses);
 	const history = useHistory();
 
 	const filteredCourses = filterCourses(courses, searchQuery);
@@ -38,15 +35,6 @@ export default function Courses() {
 		history.push('/courses/add');
 	}
 
-	useEffect(() => {
-		loadCourses().then((response) => {
-			dispatch(saveCourses(response.data.result));
-		});
-		loadAuthors().then((response) => {
-			dispatch(saveAuthors(response.data.result));
-		});
-	}, [dispatch]);
-
 	return (
 		<>
 			<div className='search-and-add-bar'>
@@ -59,17 +47,21 @@ export default function Courses() {
 					/>
 				</div>
 			</div>
-			{filteredCourses.map((course) => (
-				<CourseCard
-					key={course.id}
-					id={course.id}
-					title={course.title}
-					description={course.description}
-					authors={course.authors}
-					duration={course.duration}
-					creationDate={course.creationDate}
-				/>
-			))}
+			{courses.length === 0 ? (
+				<div>There are no courses</div>
+			) : (
+				filteredCourses.map((course) => (
+					<CourseCard
+						key={course.id}
+						id={course.id}
+						title={course.title}
+						description={course.description}
+						authors={course.authors}
+						duration={course.duration}
+						creationDate={course.creationDate}
+					/>
+				))
+			)}
 		</>
 	);
 }

@@ -7,15 +7,19 @@ import { addCourse } from '../../store/courses/actionCreators';
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
-import { useAppContext } from '../../AppContext';
-import { addAuthor, removeAuthor } from '../../store/authors/actionCreators';
+import {
+	addAuthor,
+	createAuthor,
+	removeAuthor,
+	resetAuthors,
+} from '../../store/authors/actionCreators';
+import { selectAuthors, selectCourseAuthors } from '../../store/selectors';
 
 import './CreateCourse.css';
-import axios from 'axios';
-import { addCourse1 } from '../../services';
 
 export default function CreateCourse() {
-	const courseAuthors = useSelector((state) => state.authors.courseAuthors);
+	const courseAuthors = useSelector(selectCourseAuthors);
+	const authors = useSelector(selectAuthors);
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
 	const [course, setCourse] = useState({
 		authors: [],
@@ -25,7 +29,6 @@ export default function CreateCourse() {
 		id: uuid(),
 		title: '',
 	});
-	const { authorsList, setAuthorsList } = useAppContext();
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -59,19 +62,12 @@ export default function CreateCourse() {
 			return;
 		}
 		if (
-			authorsList.filter((author) => author.name === authorToBeCreated).length >
-			0
+			authors.filter((author) => author.name === authorToBeCreated).length > 0
 		) {
 			alert('Author already exists!');
 			return;
 		}
-		setAuthorsList([
-			...authorsList,
-			{
-				id: uuid(),
-				name: authorToBeCreated,
-			},
-		]);
+		dispatch(createAuthor({ id: uuid(), name: authorToBeCreated }));
 		setAuthorToBeCreated('');
 	}
 
@@ -97,31 +93,21 @@ export default function CreateCourse() {
 			alert('Course description must be at least 2 characters long.');
 			return;
 		}
-		const headers = { Authorization: localStorage.getItem('token') };
-		const baseURL = 'http://localhost:3000';
-		// axios
-		// 	.put(`${baseURL}/courses/${course.id}`, course, { headers })
-		// 	.then((response) => response)
-		// 	.catch((e) => {
-		// 		alert(
-		// 			e.response.data.errors
-		// 				? e.response.data.errors.join('\n')
-		// 				: e.response.data.result ?? 'Something went wrong'
-		// 		);
-		// 	});
-		//dispatch(addCourse(course));
 
-		addCourse1(course).then((response) =>
-			dispatch(addCourse(response.data.result))
-		);
-
-		//history.push('/courses');
+		dispatch(addCourse(course));
+		dispatch(resetAuthors());
+		history.push('/courses');
 	}
 
 	function handleChange(e) {
+		const creationDate = new Date().toLocaleDateString('en-GB', {
+			day: '2-digit',
+			month: '2-digit',
+			year: 'numeric',
+		});
 		const name = e.target.name;
 		const value = e.target.value;
-		setCourse({ ...course, [name]: value });
+		setCourse({ ...course, [name]: value, creationDate: creationDate });
 	}
 
 	return (
@@ -197,11 +183,11 @@ export default function CreateCourse() {
 				</div>
 				<div className='course-authors-lists'>
 					<h2>Authors</h2>
-					{authorsList.length === 0 ? (
+					{authors.length === 0 ? (
 						<div>Author list is empty</div>
 					) : (
 						<>
-							{authorsList
+							{authors
 								.filter(
 									(i) => !courseAuthors.filter((y) => y.id === i.id).length
 								)

@@ -2,6 +2,7 @@ import {
 	ADD_COURSE_AUTHOR,
 	CREATE_AUTHOR,
 	REMOVE_COURSE_AUTHOR,
+	RESET_COURSE_AUTHORS,
 	SAVE_AUTHORS,
 } from './actionTypes';
 
@@ -28,6 +29,9 @@ export default function authorsReducer(
 					(author) => author.id !== payload.id
 				),
 			};
+		}
+		case RESET_COURSE_AUTHORS: {
+			return { ...state, courseAuthors: [] };
 		}
 		default:
 			return state;

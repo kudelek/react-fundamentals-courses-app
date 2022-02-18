@@ -89,18 +89,22 @@
 .course-authors-lists {
     width: 50%;
     text-align: center;
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
-.course-authors-add {
+.course-authors-add, .course-authors-delete{
     display: flex;
     flex-flow: row;
-    margin: 0.5em;
+    margin: 1em;
     height: 1.5em;
+
 }
 
 .course-author-name {
     text-align: left;
     width: 50%;
+    padding-top: 0.25em;
 }
 
 .course-author-button {
