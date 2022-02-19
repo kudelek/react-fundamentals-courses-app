@@ -1,13 +1,10 @@
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { useAppContext } from '../../AppContext';
 
 import { Button } from '../../common/Button/Button';
 import { Logo } from './components/Logo/Logo';
 import { logOut } from '../../services';
-import { store } from '../../store';
 import { selectUserName } from '../../store/selectors';
 import { logUserOut } from '../../store/user/actionCreators';
 
@@ -15,7 +12,6 @@ import './Header.css';
 
 export default function Header() {
 	const userName = useSelector(selectUserName);
-	const { isAuthenticated, setIsAuthenticated } = useAppContext();
 	const history = useHistory();
 	const dispatch = useDispatch();
 
@@ -24,16 +20,10 @@ export default function Header() {
 
 		logOut(token).then(() => {
 			localStorage.clear();
-			setIsAuthenticated(false);
 			dispatch(logUserOut());
-			console.log(store.getState());
 			history.push('/login');
 		});
 	}
-
-	useEffect(() => {
-		setIsAuthenticated(localStorage.getItem('token'));
-	});
 
 	return (
 		<header>
@@ -43,7 +33,7 @@ export default function Header() {
 					Courses
 				</Link>
 			</div>
-			{isAuthenticated && (
+			{!!localStorage.getItem('token') && (
 				<div className='right'>
 					<span className='right-item'>{userName}</span>
 					<Button

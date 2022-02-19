@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 export default function AuthenticatedRoute({ children, ...rest }) {
 	const token = localStorage.getItem('token');
 
-	return (
-		<Route {...rest}>{token ? children : <Redirect to='/login' />}</Route>
-	);
+	return <Route {...rest}>{token ? children : <Redirect to='/login' />}</Route>;
 }
 
 AuthenticatedRoute.propTypes = {

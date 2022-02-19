@@ -11,19 +11,6 @@ export default function coursesReducer(
 			return payload;
 		}
 		case ADD_COURSE: {
-			console.log('courses payload: ', payload);
-			console.log('state before: ', state);
-			console.log('state after: ', [
-				...state,
-				{
-					authors: payload.authors,
-					id: payload.id,
-					title: payload.title,
-					description: payload.description,
-					creationDate: payload.creationDate,
-					duration: +payload.duration,
-				},
-			]);
 			return [
 				...state,
 				{

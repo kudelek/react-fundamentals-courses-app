@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
-import { useAppContext } from '../../AppContext';
-
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { logIn } from '../../services';
@@ -10,7 +8,6 @@ import { logUserIn } from '../../store/user/actionCreators';
 
 export default function Login() {
 	const [user, setUser] = useState({ email: '', password: '' });
-	const { setIsAuthenticated } = useAppContext();
 	const history = useHistory();
 	const dispatch = useDispatch();
 
@@ -20,7 +17,6 @@ export default function Login() {
 		logIn(user).then((response) => {
 			const token = response.data.result;
 			const name = response.data.user.name;
-			setIsAuthenticated(true);
 			localStorage.setItem('userName', name);
 			localStorage.setItem('token', token);
 			dispatch(logUserIn({ ...user, name: name, token: token }));

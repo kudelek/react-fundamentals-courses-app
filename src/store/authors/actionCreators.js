@@ -1,10 +1,4 @@
-import {
-	ADD_COURSE_AUTHOR,
-	CREATE_AUTHOR,
-	REMOVE_COURSE_AUTHOR,
-	RESET_COURSE_AUTHORS,
-	SAVE_AUTHORS,
-} from './actionTypes';
+import { CREATE_AUTHOR, SAVE_AUTHORS } from './actionTypes';
 
 export const saveAuthors = (authors) => ({
 	type: SAVE_AUTHORS,
@@ -14,18 +8,4 @@ export const saveAuthors = (authors) => ({
 export const createAuthor = (author) => ({
 	type: CREATE_AUTHOR,
 	payload: author,
-});
-
-export const addAuthor = (author) => ({
-	type: ADD_COURSE_AUTHOR,
-	payload: author,
-});
-
-export const removeAuthor = (id) => ({
-	type: REMOVE_COURSE_AUTHOR,
-	payload: id,
-});
-
-export const resetAuthors = () => ({
-	type: RESET_COURSE_AUTHORS,
 });

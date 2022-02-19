@@ -1,24 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
-import { addCourse } from '../../store/courses/actionCreators';
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
-import {
-	addAuthor,
-	createAuthor,
-	removeAuthor,
-	resetAuthors,
-} from '../../store/authors/actionCreators';
-import { selectAuthors, selectCourseAuthors } from '../../store/selectors';
+import { addCourse } from '../../store/courses/actionCreators';
+import { createAuthor, saveAuthors } from '../../store/authors/actionCreators';
+import { selectAuthors } from '../../store/selectors';
 
 import './CreateCourse.css';
+import { loadAuthors } from '../../services';
 
 export default function CreateCourse() {
-	const courseAuthors = useSelector(selectCourseAuthors);
+	const [courseAuthors, setCourseAuthors] = useState([]);
 	const authors = useSelector(selectAuthors);
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
 	const [course, setCourse] = useState({
@@ -34,7 +30,7 @@ export default function CreateCourse() {
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
-		dispatch(addAuthor(authorToBeAdded));
+		setCourseAuthors([...courseAuthors, authorToBeAdded]);
 		setCourse({
 			...course,
 			authors: [
@@ -48,7 +44,9 @@ export default function CreateCourse() {
 		e.preventDefault();
 		for (let author of courseAuthors)
 			if (author.id === authorToBeDeleted.id) {
-				dispatch(removeAuthor(authorToBeDeleted));
+				setCourseAuthors(
+					courseAuthors.filter((author) => author.id !== authorToBeDeleted.id)
+				);
 			}
 	}
 
@@ -84,7 +82,7 @@ export default function CreateCourse() {
 		}
 
 		dispatch(addCourse(course));
-		dispatch(resetAuthors());
+		setCourseAuthors([]);
 		history.push('/courses');
 	}
 
@@ -98,6 +96,12 @@ export default function CreateCourse() {
 		const value = e.target.value;
 		setCourse({ ...course, [name]: value, creationDate: creationDate });
 	}
+
+	useEffect(() => {
+		loadAuthors().then((response) =>
+			dispatch(saveAuthors(response.data.result))
+		);
+	}, []);
 
 	return (
 		<form onSubmit={handleCreateCourse}>
