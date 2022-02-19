@@ -8,8 +8,8 @@ import { Button } from '../../common/Button/Button';
 import { selectCourses } from '../../store/selectors';
 
 import { loadAuthors, loadCourses } from '../../services';
-import { saveCourses } from '../../store/courses/actionCreators';
-import { saveAuthors } from '../../store/authors/actionCreators';
+import { getCourses } from '../../store/courses/actionCreators';
+import { getAuthors } from '../../store/authors/actionCreators';
 
 import './Courses.css';
 
@@ -42,10 +42,10 @@ export default function Courses() {
 
 	useEffect(() => {
 		loadCourses().then((response) => {
-			dispatch(saveCourses(response.data.result));
+			dispatch(getCourses(response.data.result));
 		});
 		loadAuthors().then((response) => {
-			dispatch(saveAuthors(response.data.result));
+			dispatch(getAuthors(response.data.result));
 		});
 	}, [dispatch]);
 

@@ -7,7 +7,7 @@ import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
 import { addCourse } from '../../store/courses/actionCreators';
-import { createAuthor, saveAuthors } from '../../store/authors/actionCreators';
+import { createAuthor, getAuthors } from '../../store/authors/actionCreators';
 import { selectAuthors } from '../../store/selectors';
 
 import './CreateCourse.css';
@@ -99,9 +99,9 @@ export default function CreateCourse() {
 
 	useEffect(() => {
 		loadAuthors().then((response) =>
-			dispatch(saveAuthors(response.data.result))
+			dispatch(getAuthors(response.data.result))
 		);
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<form onSubmit={handleCreateCourse}>

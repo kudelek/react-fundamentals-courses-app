@@ -1,4 +1,4 @@
-import { ADD_COURSE, DELETE_COURSE, SAVE_COURSES } from './actionTypes';
+import { SAVE_COURSE, DELETE_COURSE, GET_COURSES } from './actionTypes';
 
 const coursesInitialState = [];
 
@@ -7,10 +7,10 @@ export default function coursesReducer(
 	{ type, payload }
 ) {
 	switch (type) {
-		case SAVE_COURSES: {
+		case GET_COURSES: {
 			return payload;
 		}
-		case ADD_COURSE: {
+		case SAVE_COURSE: {
 			return [
 				...state,
 				{

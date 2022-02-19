@@ -1,17 +1,17 @@
 import {
-	ADD_COURSE,
+	SAVE_COURSE,
 	DELETE_COURSE,
-	SAVE_COURSES,
+	GET_COURSES,
 	UPDATE_COURSE,
 } from './actionTypes';
 
-export const saveCourses = (courses) => ({
-	type: SAVE_COURSES,
+export const getCourses = (courses) => ({
+	type: GET_COURSES,
 	payload: courses,
 });
 
 export const addCourse = (course) => ({
-	type: ADD_COURSE,
+	type: SAVE_COURSE,
 	payload: course,
 });
 
