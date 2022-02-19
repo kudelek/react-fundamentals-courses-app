@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import CourseCard from './components/CourseCard/CourseCard';
@@ -7,12 +7,17 @@ import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 import { selectCourses } from '../../store/selectors';
 
+import { loadAuthors, loadCourses } from '../../services';
+import { saveCourses } from '../../store/courses/actionCreators';
+import { saveAuthors } from '../../store/authors/actionCreators';
+
 import './Courses.css';
 
 export default function Courses() {
 	const [searchQuery, setSearchQuery] = useState('');
 	const courses = useSelector(selectCourses);
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const filteredCourses = filterCourses(courses, searchQuery);
 
@@ -34,6 +39,15 @@ export default function Courses() {
 	function handleAddCourse() {
 		history.push('/courses/add');
 	}
+
+	useEffect(() => {
+		loadCourses().then((response) => {
+			dispatch(saveCourses(response.data.result));
+		});
+		loadAuthors().then((response) => {
+			dispatch(saveAuthors(response.data.result));
+		});
+	}, [dispatch]);
 
 	return (
 		<>
