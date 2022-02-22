@@ -10,10 +10,10 @@ import { addCourse } from '../../store/courses/actionCreators';
 import { createAuthor, getAuthors } from '../../store/authors/actionCreators';
 import { selectAuthors } from '../../store/selectors';
 
-import './CreateCourse.css';
+import './CourseForm.css';
 import { loadAuthors } from '../../services';
 
-export default function CreateCourse() {
+export default function CourseForm() {
 	const [courseAuthors, setCourseAuthors] = useState([]);
 	const authors = useSelector(selectAuthors);
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
@@ -66,7 +66,7 @@ export default function CreateCourse() {
 		setAuthorToBeCreated('');
 	}
 
-	function handleCreateCourse(e) {
+	function handleCourseForm(e) {
 		e.preventDefault();
 		if (course.authors.length === 0) {
 			alert('Authors need to be added.');
@@ -104,7 +104,7 @@ export default function CreateCourse() {
 	}, [dispatch]);
 
 	return (
-		<form onSubmit={handleCreateCourse}>
+		<form onSubmit={handleCourseForm}>
 			<div className='title-and-create'>
 				<Input
 					name='title'

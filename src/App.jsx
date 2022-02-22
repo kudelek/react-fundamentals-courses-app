@@ -4,7 +4,7 @@ import Header from './components/Header/Header';
 import Login from './components/Login/Login';
 import Registration from './components/Registration/Registration';
 import CourseInfo from './components/CourseInfo/CourseInfo';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CourseForm from './components/CourseForm/CourseForm';
 import Courses from './components/Courses/Courses';
 import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Routes/UnauthenticatedRoute';
@@ -21,7 +21,7 @@ function App() {
 						<Login />
 					</UnauthenticatedRoute>
 					<AuthenticatedRoute exact path='/courses/add'>
-						<CreateCourse />
+						<CourseForm />
 					</AuthenticatedRoute>
 					<AuthenticatedRoute exact path='/courses/:courseId'>
 						<CourseInfo />
