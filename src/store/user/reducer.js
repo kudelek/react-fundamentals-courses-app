@@ -5,6 +5,7 @@ const userInitialState = {
 	name: localStorage.getItem('userName') || '',
 	email: '',
 	token: localStorage.getItem('token') || '',
+	role: '',
 };
 
 export default function userReducer(
