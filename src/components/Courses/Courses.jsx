@@ -7,10 +7,8 @@ import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 import { selectCourses } from '../../store/selectors';
 
-import { loadAuthors, getCourses } from '../../services';
-import { store_getCourses } from '../../store/courses/actionCreators';
-import { getAuthors } from '../../store/authors/actionCreators';
 import { thunk_getCourses } from '../../store/courses/thunk';
+import { thunk_getAuthors } from '../../store/authors/thunk';
 
 import './Courses.css';
 
@@ -43,9 +41,7 @@ export default function Courses() {
 
 	useEffect(() => {
 		dispatch(thunk_getCourses());
-		loadAuthors().then((response) => {
-			dispatch(getAuthors(response.data.result));
-		});
+		dispatch(thunk_getAuthors());
 	}, [dispatch]);
 
 	return (
@@ -63,17 +59,21 @@ export default function Courses() {
 			{courses.length === 0 ? (
 				<div>There are no courses</div>
 			) : (
-				filteredCourses.map((course) => (
-					<CourseCard
-						key={course.id}
-						id={course.id}
-						title={course.title}
-						description={course.description}
-						authors={course.authors}
-						duration={course.duration}
-						creationDate={course.creationDate}
-					/>
-				))
+				filteredCourses.map((course) =>
+					!course.id ? (
+						'loading...'
+					) : (
+						<CourseCard
+							key={course.id}
+							id={course.id}
+							title={course.title}
+							description={course.description}
+							authors={course.authors}
+							duration={course.duration}
+							creationDate={course.creationDate}
+						/>
+					)
+				)
 			)}
 		</>
 	);

@@ -62,9 +62,17 @@ export const updateCourse = (course, token) => {
 
 // AUTHORS
 
-export const loadAuthors = () => {
+export const getAuthors = () => {
 	return axios
 		.get(`${baseURL}/authors/all`)
+		.then((response) => response)
+		.catch((e) => alertErrors(e));
+};
+
+export const addAuthor = (author, token) => {
+	const headers = { Authorization: token };
+	return axios
+		.post(`${baseURL}/authors/add`, author, { headers })
 		.then((response) => response)
 		.catch((e) => alertErrors(e));
 };

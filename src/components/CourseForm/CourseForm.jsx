@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuid } from 'uuid';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
-import { createAuthor, getAuthors } from '../../store/authors/actionCreators';
 import { selectAuthors, selectCourses } from '../../store/selectors';
 
 import './CourseForm.css';
-import { loadAuthors } from '../../services';
 import { thunk_addCourse, thunk_updateCourse } from '../../store/courses/thunk';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { thunk_addAuthor, thunk_getAuthors } from '../../store/authors/thunk';
 
 export default function CourseForm({ edit }) {
 	const { courseId } = useParams();
@@ -29,7 +27,6 @@ export default function CourseForm({ edit }) {
 					creationDate: '',
 					description: '',
 					duration: '',
-					id: uuid(),
 					title: '',
 			  }
 	);
@@ -78,7 +75,12 @@ export default function CourseForm({ edit }) {
 			alert('Author already exists!');
 			return;
 		}
-		dispatch(createAuthor({ id: uuid(), name: authorToBeCreated }));
+		dispatch(
+			thunk_addAuthor(
+				{ name: authorToBeCreated },
+				localStorage.getItem('token')
+			)
+		);
 		setAuthorToBeCreated('');
 	}
 
@@ -126,9 +128,7 @@ export default function CourseForm({ edit }) {
 	}
 
 	useEffect(() => {
-		loadAuthors().then((response) =>
-			dispatch(getAuthors(response.data.result))
-		);
+		dispatch(thunk_getAuthors());
 	}, [dispatch]);
 
 	return (
@@ -215,16 +215,20 @@ export default function CourseForm({ edit }) {
 								.filter(
 									(i) => !courseAuthors.filter((y) => y.id === i.id).length
 								)
-								.map((author) => (
-									<div key={author.id} className='course-authors-add'>
-										<div className='course-author-name'>{author.name}</div>
-										<Button
-											className='course-author-button'
-											buttonText='Add author'
-											onClick={(e) => handleAddAuthor(e, author)}
-										/>
-									</div>
-								))}
+								.map((author) =>
+									!author.id ? (
+										'loading...'
+									) : (
+										<div key={author.id} className='course-authors-add'>
+											<div className='course-author-name'>{author.name}</div>
+											<Button
+												className='course-author-button'
+												buttonText='Add author'
+												onClick={(e) => handleAddAuthor(e, author)}
+											/>
+										</div>
+									)
+								)}
 						</>
 					)}
 					<h2>Course authors</h2>
