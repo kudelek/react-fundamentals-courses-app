@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import { Button } from '../../../../common/Button/Button';
 import Info from '../../../../common/Info/Info';
 import { getCourseInfo } from '../../../../helpers/getCourseInfo';
-import { deleteCourse } from '../../../../store/courses/actionCreators';
-import { selectAuthors } from '../../../../store/selectors';
+import { selectAuthors, selectUserRole } from '../../../../store/selectors';
 
 import './CourseCard.css';
+import { thunk_deleteCourse } from '../../../../store/courses/thunk';
 
 export default function CourseCard(props) {
 	const authors = useSelector(selectAuthors);
+	const role = useSelector(selectUserRole);
 	const history = useHistory();
 	const dispatch = useDispatch();
 
@@ -20,11 +21,11 @@ export default function CourseCard(props) {
 	}
 
 	function handleEditCourse() {
-		console.log('Edit course button clicked!');
+		history.push(`/courses/update/${props.id}`);
 	}
 
 	function handleDeleteCourse() {
-		dispatch(deleteCourse(props));
+		dispatch(thunk_deleteCourse(props.id, localStorage.getItem('token')));
 	}
 
 	return (
@@ -49,16 +50,22 @@ export default function CourseCard(props) {
 						buttonText='Show course'
 						onClick={handleShowCourse}
 					/>
-					<Button
-						className='course-button'
-						buttonText='Edit'
-						onClick={handleEditCourse}
-					/>
-					<Button
-						className='course-button'
-						buttonText='Delete'
-						onClick={handleDeleteCourse}
-					/>
+					{role === 'admin' ? (
+						<>
+							<Button
+								className='course-button'
+								buttonText='Edit'
+								onClick={handleEditCourse}
+							/>
+							<Button
+								className='course-button'
+								buttonText='Delete'
+								onClick={handleDeleteCourse}
+							/>
+						</>
+					) : (
+						''
+					)}
 				</div>
 			</div>
 		</section>

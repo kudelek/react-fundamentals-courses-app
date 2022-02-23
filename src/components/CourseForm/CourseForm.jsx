@@ -6,25 +6,40 @@ import { v4 as uuid } from 'uuid';
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
-import { addCourse } from '../../store/courses/actionCreators';
 import { createAuthor, getAuthors } from '../../store/authors/actionCreators';
-import { selectAuthors } from '../../store/selectors';
+import { selectAuthors, selectCourses } from '../../store/selectors';
 
 import './CourseForm.css';
 import { loadAuthors } from '../../services';
+import { thunk_addCourse, thunk_updateCourse } from '../../store/courses/thunk';
 
-export default function CourseForm() {
-	const [courseAuthors, setCourseAuthors] = useState([]);
+export default function CourseForm({ edit }) {
 	const authors = useSelector(selectAuthors);
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
-	const [course, setCourse] = useState({
-		authors: [],
-		creationDate: '',
-		description: '',
-		duration: '',
-		id: uuid(),
-		title: '',
-	});
+	const existingCourse = useSelector(selectCourses).filter(
+		(course) => course.id === window.location.href.replace(/^.*[\\/]/, '')
+	);
+	const [course, setCourse] = useState(
+		edit
+			? { ...existingCourse[0], duration: String(existingCourse[0].duration) }
+			: {
+					authors: [],
+					creationDate: '',
+					description: '',
+					duration: '',
+					id: uuid(),
+					title: '',
+			  }
+	);
+	const [courseAuthors, setCourseAuthors] = useState(
+		edit
+			? course.authors.map((courseAuthorId) => ({
+					id: courseAuthorId,
+					name: authors.find((author) => author.id === courseAuthorId).name,
+			  }))
+			: []
+	);
+	console.log(courseAuthors);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -66,7 +81,7 @@ export default function CourseForm() {
 		setAuthorToBeCreated('');
 	}
 
-	function handleCourseForm(e) {
+	function handleSubmitCourseForm(e) {
 		e.preventDefault();
 		if (course.authors.length === 0) {
 			alert('Authors need to be added.');
@@ -81,7 +96,19 @@ export default function CourseForm() {
 			return;
 		}
 
-		dispatch(addCourse(course));
+		edit
+			? dispatch(
+					thunk_updateCourse(
+						{ ...course, duration: +course.duration },
+						localStorage.getItem('token')
+					)
+			  )
+			: dispatch(
+					thunk_addCourse(
+						{ ...course, duration: +course.duration },
+						localStorage.getItem('token')
+					)
+			  );
 		setCourseAuthors([]);
 		history.push('/courses');
 	}
@@ -101,10 +128,11 @@ export default function CourseForm() {
 		loadAuthors().then((response) =>
 			dispatch(getAuthors(response.data.result))
 		);
+		console.log(course);
 	}, [dispatch]);
 
 	return (
-		<form onSubmit={handleCourseForm}>
+		<form onSubmit={handleSubmitCourseForm}>
 			<div className='title-and-create'>
 				<Input
 					name='title'
@@ -119,7 +147,10 @@ export default function CourseForm() {
 					required
 				/>
 				<div className='create-course'>
-					<Button buttonText='Create course' className='create-course-button' />
+					<Button
+						buttonText={edit ? 'Update course' : 'Create course'}
+						className='create-course-button'
+					/>
 				</div>
 			</div>
 			<div className='description'>

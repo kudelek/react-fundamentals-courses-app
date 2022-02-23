@@ -1,4 +1,9 @@
-import { SAVE_COURSE, DELETE_COURSE, GET_COURSES } from './actionTypes';
+import {
+	SAVE_COURSE,
+	REMOVE_COURSE,
+	GET_COURSES,
+	UPDATE_COURSE,
+} from './actionTypes';
 
 const coursesInitialState = [];
 
@@ -19,12 +24,17 @@ export default function coursesReducer(
 					title: payload.title,
 					description: payload.description,
 					creationDate: payload.creationDate,
-					duration: +payload.duration,
+					duration: payload.duration,
 				},
 			];
 		}
-		case DELETE_COURSE: {
-			return state.filter((course) => course.id !== payload.id);
+		case UPDATE_COURSE: {
+			return [
+				state.map((course) => (course.id === payload.id ? payload : course)),
+			];
+		}
+		case REMOVE_COURSE: {
+			return state.filter((course) => course.id !== payload);
 		}
 		default:
 			return state;

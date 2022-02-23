@@ -10,5 +10,5 @@ export default function AuthenticatedRoute({ children, ...rest }) {
 
 AuthenticatedRoute.propTypes = {
 	exact: PropTypes.bool,
-	path: PropTypes.string.isRequired,
+	path: PropTypes.string,
 };

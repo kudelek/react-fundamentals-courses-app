@@ -1,11 +1,16 @@
-import { LOG_USER_IN, LOG_USER_OUT } from './actionTypes';
+import { getCurrentUser } from '../../services';
+import { LOG_USER_IN, LOG_USER_OUT, SET_USER_ROLE } from './actionTypes';
+
+const token = localStorage.getItem('token');
 
 const userInitialState = {
-	isAuth: !!localStorage.getItem('token'),
+	isAuth: !!token,
 	name: localStorage.getItem('userName') || '',
 	email: '',
-	token: localStorage.getItem('token') || '',
-	role: '',
+	token: token || '',
+	role: token
+		? getCurrentUser(token).then((response) => response.data.result.role)
+		: '',
 };
 
 export default function userReducer(
@@ -29,6 +34,12 @@ export default function userReducer(
 				name: '',
 				email: '',
 				token: '',
+			};
+		}
+		case SET_USER_ROLE: {
+			return {
+				...state,
+				role: payload,
 			};
 		}
 		default:
