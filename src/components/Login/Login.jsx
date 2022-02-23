@@ -3,8 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
-import { logIn } from '../../services';
-import { logUserIn } from '../../store/user/actionCreators';
+import { thunk_logUserIn } from '../../store/user/thunk';
 
 export default function Login() {
 	const [user, setUser] = useState({ email: '', password: '' });
@@ -14,14 +13,7 @@ export default function Login() {
 	function handleLogin(e) {
 		e.preventDefault();
 
-		logIn(user).then((response) => {
-			const token = response.data.result;
-			const name = response.data.user.name;
-			localStorage.setItem('userName', name);
-			localStorage.setItem('token', token);
-			dispatch(logUserIn({ ...user, name: name, token: token }));
-			history.push('/courses');
-		});
+		dispatch(thunk_logUserIn(user, history));
 	}
 
 	function handleChange(e) {

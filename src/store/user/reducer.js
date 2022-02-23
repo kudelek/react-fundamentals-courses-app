@@ -1,5 +1,10 @@
 import { getCurrentUser } from '../../services';
-import { LOG_USER_IN, LOG_USER_OUT, SET_USER_ROLE } from './actionTypes';
+import {
+	LOG_USER_IN,
+	LOG_USER_OUT,
+	SET_USER_NAME,
+	SET_USER_ROLE,
+} from './actionTypes';
 
 const token = localStorage.getItem('token');
 
@@ -40,6 +45,12 @@ export default function userReducer(
 			return {
 				...state,
 				role: payload,
+			};
+		}
+		case SET_USER_NAME: {
+			return {
+				...state,
+				name: payload === null ? 'null' : payload,
 			};
 		}
 		default:

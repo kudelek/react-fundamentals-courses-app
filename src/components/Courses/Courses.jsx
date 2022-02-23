@@ -9,6 +9,7 @@ import { selectCourses } from '../../store/selectors';
 
 import { thunk_getCourses } from '../../store/courses/thunk';
 import { thunk_getAuthors } from '../../store/authors/thunk';
+import { thunk_getCurrentUserName } from '../../store/user/thunk';
 
 import './Courses.css';
 
@@ -42,6 +43,7 @@ export default function Courses() {
 	useEffect(() => {
 		dispatch(thunk_getCourses());
 		dispatch(thunk_getAuthors());
+		dispatch(thunk_getCurrentUserName(localStorage.getItem('token')));
 	}, [dispatch]);
 
 	return (

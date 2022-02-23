@@ -10,7 +10,7 @@ const alertErrors = (e) => {
 	);
 };
 
-// LOGIN
+// USER
 
 export const logIn = (user) => {
 	return axios
@@ -19,14 +19,20 @@ export const logIn = (user) => {
 		.catch((e) => alertErrors(e));
 };
 
-// LOGOUT
-
 export const logOut = (token) => {
 	const headers = { Authorization: token };
 	return axios
 		.delete(`${baseURL}/logout`, {
 			headers,
 		})
+		.catch((e) => alertErrors(e));
+};
+
+export const getCurrentUser = (token) => {
+	const headers = { Authorization: token };
+	return axios
+		.get(`${baseURL}/users/me`, { headers })
+		.then((response) => response)
 		.catch((e) => alertErrors(e));
 };
 
@@ -73,16 +79,6 @@ export const addAuthor = (author, token) => {
 	const headers = { Authorization: token };
 	return axios
 		.post(`${baseURL}/authors/add`, author, { headers })
-		.then((response) => response)
-		.catch((e) => alertErrors(e));
-};
-
-// USER
-
-export const getCurrentUser = (token) => {
-	const headers = { Authorization: token };
-	return axios
-		.get(`${baseURL}/users/me`, { headers })
 		.then((response) => response)
 		.catch((e) => alertErrors(e));
 };
