@@ -7,10 +7,10 @@ import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 import { selectCourses } from '../../store/selectors';
 
-import { loadAuthors, loadCourses } from '../../services';
-import { getCourses } from '../../store/courses/actionCreators';
+import { loadAuthors, getCourses } from '../../services';
+import { store_getCourses } from '../../store/courses/actionCreators';
 import { getAuthors } from '../../store/authors/actionCreators';
-import { thunk_loadCourses } from '../../store/courses/thunk';
+import { thunk_getCourses } from '../../store/courses/thunk';
 
 import './Courses.css';
 
@@ -42,15 +42,11 @@ export default function Courses() {
 	}
 
 	useEffect(() => {
-		thunk_loadCourses();
-		loadCourses().then((response) => {
-			console.log('loadCourses');
-			dispatch(getCourses(response.data.result));
-		});
+		dispatch(thunk_getCourses());
 		loadAuthors().then((response) => {
 			dispatch(getAuthors(response.data.result));
 		});
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<>

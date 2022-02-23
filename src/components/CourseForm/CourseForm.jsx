@@ -12,12 +12,14 @@ import { selectAuthors, selectCourses } from '../../store/selectors';
 import './CourseForm.css';
 import { loadAuthors } from '../../services';
 import { thunk_addCourse, thunk_updateCourse } from '../../store/courses/thunk';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function CourseForm({ edit }) {
+	const { courseId } = useParams();
 	const authors = useSelector(selectAuthors);
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
 	const existingCourse = useSelector(selectCourses).filter(
-		(course) => course.id === window.location.href.replace(/^.*[\\/]/, '')
+		(course) => course.id === courseId
 	);
 	const [course, setCourse] = useState(
 		edit
@@ -39,7 +41,6 @@ export default function CourseForm({ edit }) {
 			  }))
 			: []
 	);
-	console.log(courseAuthors);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -128,7 +129,6 @@ export default function CourseForm({ edit }) {
 		loadAuthors().then((response) =>
 			dispatch(getAuthors(response.data.result))
 		);
-		console.log(course);
 	}, [dispatch]);
 
 	return (

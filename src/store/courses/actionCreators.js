@@ -5,7 +5,7 @@ import {
 	UPDATE_COURSE,
 } from './actionTypes';
 
-export const getCourses = (courses) => ({
+export const store_getCourses = (courses) => ({
 	type: GET_COURSES,
 	payload: courses,
 });

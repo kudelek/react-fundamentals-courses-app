@@ -1,26 +1,23 @@
 import {
 	addCourse,
 	deleteCourse,
-	loadCourses,
+	getCourses,
 	updateCourse,
 } from '../../services';
 import {
-	getCourses,
+	store_getCourses,
 	store_addCourse,
 	store_deleteCourse,
 	store_updateCourse,
 } from './actionCreators';
 
-export const thunk_loadCourses = () => async (dispatch) => {
-	console.log('thunk_loadCourses');
-	await loadCourses().then((response) => {
-		console.log(response);
-		dispatch(getCourses(response.data.result));
+export const thunk_getCourses = () => async (dispatch) => {
+	await getCourses().then((response) => {
+		dispatch(store_getCourses(response.data.result));
 	});
 };
 
 export const thunk_deleteCourse = (id, token) => async (dispatch) => {
-	console.log('thunk_deleteCourse');
 	await deleteCourse(id, token).then(() => dispatch(store_deleteCourse(id)));
 };
 

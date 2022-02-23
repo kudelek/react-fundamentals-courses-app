@@ -9,9 +9,10 @@ import './CourseInfo.css';
 
 export default function CourseInfo() {
 	const { courseId } = useParams();
-	const courses = useSelector(selectCourses);
 	const authors = useSelector(selectAuthors);
-	const course = courses.find((course) => course.id === courseId);
+	const [course] = useSelector(selectCourses).filter(
+		(course) => course.id === courseId
+	);
 
 	return (
 		<div className='main-container'>
