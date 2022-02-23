@@ -10,12 +10,16 @@ const alertErrors = (e) => {
 	);
 };
 
+// LOGIN
+
 export const logIn = (user) => {
 	return axios
 		.post(`${baseURL}/login`, user)
 		.then((response) => response)
 		.catch((e) => alertErrors(e));
 };
+
+// LOGOUT
 
 export const logOut = (token) => {
 	const headers = { Authorization: token };
@@ -25,6 +29,8 @@ export const logOut = (token) => {
 		})
 		.catch((e) => alertErrors(e));
 };
+
+// COURSES
 
 export const getCourses = () => {
 	return axios
@@ -54,12 +60,16 @@ export const updateCourse = (course, token) => {
 		.catch((e) => alertErrors(e));
 };
 
+// AUTHORS
+
 export const loadAuthors = () => {
 	return axios
 		.get(`${baseURL}/authors/all`)
 		.then((response) => response)
 		.catch((e) => alertErrors(e));
 };
+
+// USER
 
 export const getCurrentUser = (token) => {
 	const headers = { Authorization: token };
