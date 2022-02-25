@@ -120,8 +120,8 @@ export default function CourseForm({ edit }) {
 
 	useEffect(() => {
 		dispatch(thunk_getAuthors());
-		dispatch(thunk_getCourses());
-	}, [dispatch]);
+		if (edit) dispatch(thunk_getCourses());
+	}, [dispatch, edit]);
 
 	useEffect(() => {
 		if (edit && existingCourse) {
