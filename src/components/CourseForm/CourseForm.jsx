@@ -26,7 +26,6 @@ export default function CourseForm({ edit }) {
 		duration: '',
 		title: '',
 	});
-	const [courseAuthors, setCourseAuthors] = useState([]);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -34,45 +33,30 @@ export default function CourseForm({ edit }) {
 		setCourse({
 			...existingCourse,
 			duration: String(existingCourse.duration),
-			authors: existingCourse.authors.map((courseAuthorId) => ({
-				id: courseAuthorId,
-				name: authors.find((author) => author.id === courseAuthorId).name,
-			})),
+			authors: existingCourse.authors,
 		});
-		setCourseAuthors(
-			existingCourse.authors.map((courseAuthorId) => ({
-				id: courseAuthorId,
-				name: authors.find((author) => author.id === courseAuthorId).name,
-			}))
-		);
 	}
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
-		setCourseAuthors([...courseAuthors, authorToBeAdded]);
 		setCourse({
 			...course,
-			authors: [
-				...courseAuthors,
-				{ id: authorToBeAdded.id, name: authorToBeAdded.name },
-			].map((courseAuthor) => courseAuthor.id),
+			authors: [...course.authors, authorToBeAdded.id],
 		});
 	}
 
 	function handleDeleteAuthor(e, authorToBeDeleted) {
 		e.preventDefault();
-		for (let author of courseAuthors)
-			if (author.id === authorToBeDeleted.id) {
-				setCourseAuthors(
-					courseAuthors.filter((author) => author.id !== authorToBeDeleted.id)
-				);
+		for (let author of course.authors) {
+			if (author === authorToBeDeleted) {
 				setCourse({
 					...course,
-					authors: courseAuthors.filter(
-						(author) => author.id !== authorToBeDeleted.id
+					authors: course.authors.filter(
+						(author) => author !== authorToBeDeleted
 					),
 				});
 			}
+		}
 	}
 
 	function handleCreateAuthor(e) {
@@ -124,7 +108,6 @@ export default function CourseForm({ edit }) {
 						duration: +course.duration,
 					})
 			  );
-		setCourseAuthors([]);
 		history.push('/courses');
 	}
 
@@ -228,9 +211,7 @@ export default function CourseForm({ edit }) {
 					) : (
 						<>
 							{authors
-								.filter(
-									(i) => !courseAuthors.filter((y) => y.id === i.id).length
-								)
+								.filter((i) => !course.authors.filter((y) => y === i.id).length)
 								.map((author) =>
 									!author.id ? (
 										'loading...'
@@ -248,13 +229,15 @@ export default function CourseForm({ edit }) {
 						</>
 					)}
 					<h2>Course authors</h2>
-					{courseAuthors.length === 0 ? (
+					{course.authors.length === 0 ? (
 						<div>Course author list is empty</div>
 					) : (
 						<>
-							{courseAuthors.map((author) => (
-								<div key={author.id} className='course-authors-delete'>
-									<div className='course-author-name'>{author.name}</div>
+							{course.authors.map((author) => (
+								<div key={author} className='course-authors-delete'>
+									<div className='course-author-name'>
+										{authors.filter((a) => a.id === author)[0].name}
+									</div>
 									<Button
 										className='course-author-button'
 										buttonText='Delete author'

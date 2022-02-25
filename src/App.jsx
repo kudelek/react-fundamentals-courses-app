@@ -22,19 +22,17 @@ import { thunk_getCourses } from './store/courses/thunk';
 function App() {
 	const dispatch = useDispatch();
 	const token = useSelector(selectToken);
-	console.log('App');
 
 	useEffect(() => {
-		console.log('useEffect once');
 		if (localStorage.getItem('token')) {
-			dispatch(thunk_getUser(localStorage.getItem('token')));
+			dispatch(thunk_getUser());
 		}
 	}, [dispatch]);
 
 	useEffect(() => {
 		if (token) {
-			dispatch(thunk_getAuthors(token));
-			dispatch(thunk_getCourses(token));
+			dispatch(thunk_getAuthors());
+			dispatch(thunk_getCourses());
 		}
 	}, [dispatch, token]);
 

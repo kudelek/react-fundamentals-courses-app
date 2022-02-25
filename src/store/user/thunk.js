@@ -1,7 +1,8 @@
 import { getCurrentUser, logIn, logOut } from '../../services';
 import { getUser, logUserIn, logUserOut } from './actionCreators';
 
-export const thunk_getUser = (token) => async (dispatch) => {
+export const thunk_getUser = () => async (dispatch) => {
+	const token = localStorage.getItem('token');
 	await getCurrentUser(token).then((response) => {
 		localStorage.setItem('role', response.data.result.role);
 		dispatch(getUser({ ...response.data.result, token }));
@@ -23,8 +24,8 @@ export const thunk_logUserIn = (user, history) => async (dispatch) => {
 		});
 };
 
-export const thunk_logUserOut = (token, history) => async (dispatch) => {
-	await logOut(token).then(() => {
+export const thunk_logUserOut = (history) => async (dispatch) => {
+	await logOut(localStorage.getItem('token')).then(() => {
 		localStorage.clear();
 		dispatch(logUserOut());
 		history.push('/login');

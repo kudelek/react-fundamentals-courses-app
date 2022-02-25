@@ -7,8 +7,8 @@ export const thunk_getAuthors = () => async (dispatch) => {
 	);
 };
 
-export const thunk_addAuthor = (author, token) => async (dispatch) => {
-	await addAuthor(author, token).then(() => {
+export const thunk_addAuthor = (author) => async (dispatch) => {
+	await addAuthor(author, localStorage.getItem('token')).then(() => {
 		dispatch(thunk_getAuthors());
 	});
 };

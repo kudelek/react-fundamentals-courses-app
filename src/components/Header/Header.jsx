@@ -15,9 +15,7 @@ export default function Header() {
 	const dispatch = useDispatch();
 
 	function handleLogout() {
-		const token = localStorage.getItem('token');
-
-		dispatch(thunk_logUserOut(token, history));
+		dispatch(thunk_logUserOut(history));
 	}
 
 	return (
