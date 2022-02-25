@@ -1,5 +1,5 @@
 import { Switch, BrowserRouter as Router, Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import Header from './components/Header/Header';
@@ -8,16 +8,17 @@ import Registration from './components/Registration/Registration';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import CourseForm from './components/CourseForm/CourseForm';
 import Courses from './components/Courses/Courses';
+
 import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Routes/UnauthenticatedRoute';
 import PrivateRoute from './components/PrivateRouter/PrivateRouter';
-import { thunk_getUser } from './store/user/thunk';
 
-import './App.css';
-import { useSelector } from 'react-redux';
 import { selectToken } from './store/selectors';
+import { thunk_getUser } from './store/user/thunk';
 import { thunk_getAuthors } from './store/authors/thunk';
 import { thunk_getCourses } from './store/courses/thunk';
+
+import './App.css';
 
 function App() {
 	const dispatch = useDispatch();

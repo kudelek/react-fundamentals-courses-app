@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import CourseCard from './components/CourseCard/CourseCard';
@@ -14,7 +14,6 @@ export default function Courses() {
 	const courses = useSelector(selectCourses);
 	const role = useSelector(selectUserRole);
 	const history = useHistory();
-	const dispatch = useDispatch();
 
 	const filteredCourses = filterCourses(courses, searchQuery);
 

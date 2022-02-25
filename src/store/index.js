@@ -1,6 +1,7 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import ReduxThunk from 'redux-thunk';
+
 import authorsReducer from './authors/reducer';
 import coursesReducer from './courses/reducer';
 import userReducer from './user/reducer';

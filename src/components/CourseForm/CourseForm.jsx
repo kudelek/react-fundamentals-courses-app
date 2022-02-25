@@ -29,14 +29,6 @@ export default function CourseForm({ edit }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	function setExistingCourse() {
-		setCourse({
-			...existingCourse,
-			duration: String(existingCourse.duration),
-			authors: existingCourse.authors,
-		});
-	}
-
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
 		setCourse({
@@ -124,7 +116,11 @@ export default function CourseForm({ edit }) {
 
 	useEffect(() => {
 		if (edit && existingCourse) {
-			setExistingCourse();
+			setCourse({
+				...existingCourse,
+				duration: String(existingCourse.duration),
+				authors: existingCourse.authors,
+			});
 		}
 	}, [existingCourse]);
 
