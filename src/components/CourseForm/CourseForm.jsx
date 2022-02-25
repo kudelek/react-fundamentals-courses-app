@@ -9,6 +9,7 @@ import { getDuration } from '../../helpers/pipeDuration';
 import { selectAuthors, selectCourses } from '../../store/selectors';
 import {
 	thunk_addCourse,
+	thunk_getCourse,
 	thunk_getCourses,
 	thunk_updateCourse,
 } from '../../store/courses/thunk';
@@ -20,9 +21,7 @@ export default function CourseForm({ edit }) {
 	const { courseId } = useParams();
 	const authors = useSelector(selectAuthors);
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
-	const [existingCourse] = useSelector(selectCourses).filter(
-		(course) => course.id === courseId
-	);
+	const [existingCourse] = useSelector(selectCourses);
 	const [course, setCourse] = useState({
 		authors: [],
 		creationDate: '',
@@ -30,6 +29,7 @@ export default function CourseForm({ edit }) {
 		duration: '',
 		title: '',
 	});
+	const [isLoading, setIsLoading] = useState(true);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -120,8 +120,9 @@ export default function CourseForm({ edit }) {
 
 	useEffect(() => {
 		dispatch(thunk_getAuthors());
-		if (edit) dispatch(thunk_getCourses());
-	}, [dispatch, edit]);
+		if (edit) dispatch(thunk_getCourse(courseId, setIsLoading));
+		else setIsLoading(false);
+	}, [courseId, dispatch, edit]);
 
 	useEffect(() => {
 		if (edit && existingCourse) {
@@ -131,9 +132,9 @@ export default function CourseForm({ edit }) {
 				authors: existingCourse.authors,
 			});
 		}
-	}, [existingCourse]);
+	}, [edit, existingCourse]);
 
-	return !((edit && existingCourse) || !edit) ? (
+	return isLoading ? (
 		'loading...'
 	) : (
 		<form onSubmit={handleSubmitCourseForm}>
