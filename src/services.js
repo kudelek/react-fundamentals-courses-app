@@ -45,6 +45,13 @@ export const getCourses = () => {
 		.catch((e) => alertErrors(e));
 };
 
+export const getCourse = (id) => {
+	return axios
+		.get(`${baseURL}/courses/${id}`)
+		.then((response) => response)
+		.catch((e) => alertErrors(e));
+};
+
 export const addCourse = (course, token) => {
 	const headers = { Authorization: token };
 	return axios

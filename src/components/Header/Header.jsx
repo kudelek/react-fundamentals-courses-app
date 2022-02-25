@@ -30,7 +30,9 @@ export default function Header() {
 			</div>
 			{!!localStorage.getItem('token') && (
 				<div className='right'>
-					<span className='right-item'>{userName}</span>
+					<span className='right-item'>
+						{userName === null ? 'null' : userName}
+					</span>
 					<Button
 						className='right-item'
 						buttonText='Logout'

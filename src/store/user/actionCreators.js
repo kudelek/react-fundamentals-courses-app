@@ -1,9 +1,4 @@
-import {
-	LOG_USER_IN,
-	LOG_USER_OUT,
-	SET_USER_NAME,
-	SET_USER_ROLE,
-} from './actionTypes';
+import { GET_USER, LOG_USER_IN, LOG_USER_OUT } from './actionTypes';
 
 export const logUserIn = (user) => ({
 	type: LOG_USER_IN,
@@ -15,12 +10,7 @@ export const logUserOut = (user) => ({
 	payload: user,
 });
 
-export const setUserRole = (role) => ({
-	type: SET_USER_ROLE,
-	payload: role,
-});
-
-export const setCurrentUserName = (name) => ({
-	type: SET_USER_NAME,
-	payload: name,
+export const getUser = (user) => ({
+	type: GET_USER,
+	payload: user,
 });

@@ -7,39 +7,45 @@ import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
 import { selectAuthors, selectCourses } from '../../store/selectors';
+import { thunk_addCourse, thunk_updateCourse } from '../../store/courses/thunk';
+import { thunk_addAuthor } from '../../store/authors/thunk';
 
 import './CourseForm.css';
-import { thunk_addCourse, thunk_updateCourse } from '../../store/courses/thunk';
-import { thunk_addAuthor, thunk_getAuthors } from '../../store/authors/thunk';
 
 export default function CourseForm({ edit }) {
 	const { courseId } = useParams();
 	const authors = useSelector(selectAuthors);
 	const [authorToBeCreated, setAuthorToBeCreated] = useState('');
-	const existingCourse = useSelector(selectCourses).filter(
+	const [existingCourse] = useSelector(selectCourses).filter(
 		(course) => course.id === courseId
 	);
-	const [course, setCourse] = useState(
-		edit
-			? { ...existingCourse[0], duration: String(existingCourse[0].duration) }
-			: {
-					authors: [],
-					creationDate: '',
-					description: '',
-					duration: '',
-					title: '',
-			  }
-	);
-	const [courseAuthors, setCourseAuthors] = useState(
-		edit
-			? course.authors.map((courseAuthorId) => ({
-					id: courseAuthorId,
-					name: authors.find((author) => author.id === courseAuthorId).name,
-			  }))
-			: []
-	);
+	const [course, setCourse] = useState({
+		authors: [],
+		creationDate: '',
+		description: '',
+		duration: '',
+		title: '',
+	});
+	const [courseAuthors, setCourseAuthors] = useState([]);
 	const dispatch = useDispatch();
 	const history = useHistory();
+
+	function setExistingCourse() {
+		setCourse({
+			...existingCourse,
+			duration: String(existingCourse.duration),
+			authors: existingCourse.authors.map((courseAuthorId) => ({
+				id: courseAuthorId,
+				name: authors.find((author) => author.id === courseAuthorId).name,
+			})),
+		});
+		setCourseAuthors(
+			existingCourse.authors.map((courseAuthorId) => ({
+				id: courseAuthorId,
+				name: authors.find((author) => author.id === courseAuthorId).name,
+			}))
+		);
+	}
 
 	function handleAddAuthor(e, authorToBeAdded) {
 		e.preventDefault();
@@ -60,6 +66,12 @@ export default function CourseForm({ edit }) {
 				setCourseAuthors(
 					courseAuthors.filter((author) => author.id !== authorToBeDeleted.id)
 				);
+				setCourse({
+					...course,
+					authors: courseAuthors.filter(
+						(author) => author.id !== authorToBeDeleted.id
+					),
+				});
 			}
 	}
 
@@ -101,16 +113,16 @@ export default function CourseForm({ edit }) {
 
 		edit
 			? dispatch(
-					thunk_updateCourse(
-						{ ...course, duration: +course.duration },
-						localStorage.getItem('token')
-					)
+					thunk_updateCourse({
+						...course,
+						duration: +course.duration,
+					})
 			  )
 			: dispatch(
-					thunk_addCourse(
-						{ ...course, duration: +course.duration },
-						localStorage.getItem('token')
-					)
+					thunk_addCourse({
+						...course,
+						duration: +course.duration,
+					})
 			  );
 		setCourseAuthors([]);
 		history.push('/courses');
@@ -128,10 +140,14 @@ export default function CourseForm({ edit }) {
 	}
 
 	useEffect(() => {
-		dispatch(thunk_getAuthors());
-	}, [dispatch]);
+		if (edit && existingCourse) {
+			setExistingCourse();
+		}
+	}, [existingCourse]);
 
-	return (
+	return !((edit && existingCourse) || !edit) ? (
+		'loading...'
+	) : (
 		<form onSubmit={handleSubmitCourseForm}>
 			<div className='title-and-create'>
 				<Input

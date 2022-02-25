@@ -1,5 +1,12 @@
 import { getCurrentUser, logIn, logOut } from '../../services';
-import { logUserIn, logUserOut, setCurrentUserName } from './actionCreators';
+import { getUser, logUserIn, logUserOut } from './actionCreators';
+
+export const thunk_getUser = (token) => async (dispatch) => {
+	await getCurrentUser(token).then((response) => {
+		localStorage.setItem('role', response.data.result.role);
+		dispatch(getUser({ ...response.data.result, token }));
+	});
+};
 
 export const thunk_logUserIn = (user, history) => async (dispatch) => {
 	await logIn(user)
@@ -9,8 +16,11 @@ export const thunk_logUserIn = (user, history) => async (dispatch) => {
 			localStorage.setItem('userName', name);
 			localStorage.setItem('token', token);
 			dispatch(logUserIn({ ...user, name: name, token: token }));
+			dispatch(thunk_getUser(token));
 		})
-		.then(() => history.push('/courses'));
+		.then(() => {
+			history.push('/courses');
+		});
 };
 
 export const thunk_logUserOut = (token, history) => async (dispatch) => {
@@ -18,11 +28,5 @@ export const thunk_logUserOut = (token, history) => async (dispatch) => {
 		localStorage.clear();
 		dispatch(logUserOut());
 		history.push('/login');
-	});
-};
-
-export const thunk_getCurrentUserName = (token) => async (dispatch) => {
-	await getCurrentUser(token).then((response) => {
-		dispatch(setCurrentUserName(response.data.result.name));
 	});
 };

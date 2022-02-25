@@ -1,4 +1,6 @@
 import { Switch, BrowserRouter as Router, Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 import Header from './components/Header/Header';
 import Login from './components/Login/Login';
@@ -9,21 +11,30 @@ import Courses from './components/Courses/Courses';
 import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Routes/UnauthenticatedRoute';
 import PrivateRoute from './components/PrivateRouter/PrivateRouter';
+import { thunk_getUser } from './store/user/thunk';
 
 import './App.css';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getCurrentUser } from './services';
-import { setUserRole } from './store/user/actionCreators';
+import { useSelector } from 'react-redux';
+import { selectToken } from './store/selectors';
+import { thunk_getAuthors } from './store/authors/thunk';
+import { thunk_getCourses } from './store/courses/thunk';
 
 function App() {
 	const dispatch = useDispatch();
-	const token = localStorage.getItem('token');
+	const token = useSelector(selectToken);
+	console.log('App');
+
+	useEffect(() => {
+		console.log('useEffect once');
+		if (localStorage.getItem('token')) {
+			dispatch(thunk_getUser(localStorage.getItem('token')));
+		}
+	}, [dispatch]);
+
 	useEffect(() => {
 		if (token) {
-			getCurrentUser(token).then((response) =>
-				dispatch(setUserRole(response.data.result.role))
-			);
+			dispatch(thunk_getAuthors(token));
+			dispatch(thunk_getCourses(token));
 		}
 	}, [dispatch, token]);
 

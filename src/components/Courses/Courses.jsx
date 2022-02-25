@@ -5,17 +5,14 @@ import { useHistory } from 'react-router-dom';
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
-import { selectCourses } from '../../store/selectors';
-
-import { thunk_getCourses } from '../../store/courses/thunk';
-import { thunk_getAuthors } from '../../store/authors/thunk';
-import { thunk_getCurrentUserName } from '../../store/user/thunk';
+import { selectCourses, selectUserRole } from '../../store/selectors';
 
 import './Courses.css';
 
 export default function Courses() {
 	const [searchQuery, setSearchQuery] = useState('');
 	const courses = useSelector(selectCourses);
+	const role = useSelector(selectUserRole);
 	const history = useHistory();
 	const dispatch = useDispatch();
 
@@ -40,23 +37,21 @@ export default function Courses() {
 		history.push('/courses/add');
 	}
 
-	useEffect(() => {
-		dispatch(thunk_getCourses());
-		dispatch(thunk_getAuthors());
-		dispatch(thunk_getCurrentUserName(localStorage.getItem('token')));
-	}, [dispatch]);
-
 	return (
 		<>
 			<div className='search-and-add-bar'>
 				<SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-				<div className='add'>
-					<Button
-						buttonText='Add new course'
-						className='add-button'
-						onClick={handleAddCourse}
-					/>
-				</div>
+				{role !== 'admin' ? (
+					''
+				) : (
+					<div className='add'>
+						<Button
+							buttonText='Add new course'
+							className='add-button'
+							onClick={handleAddCourse}
+						/>
+					</div>
+				)}
 			</div>
 			{courses.length === 0 ? (
 				<div>There are no courses</div>

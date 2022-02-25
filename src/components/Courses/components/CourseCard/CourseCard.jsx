@@ -6,9 +6,9 @@ import { Button } from '../../../../common/Button/Button';
 import Info from '../../../../common/Info/Info';
 import { getCourseInfo } from '../../../../helpers/getCourseInfo';
 import { selectAuthors, selectUserRole } from '../../../../store/selectors';
+import { thunk_deleteCourse } from '../../../../store/courses/thunk';
 
 import './CourseCard.css';
-import { thunk_deleteCourse } from '../../../../store/courses/thunk';
 
 export default function CourseCard(props) {
 	const authors = useSelector(selectAuthors);
