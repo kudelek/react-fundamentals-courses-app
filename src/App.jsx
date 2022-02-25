@@ -1,5 +1,5 @@
 import { Switch, BrowserRouter as Router, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 import Header from './components/Header/Header';
@@ -13,29 +13,18 @@ import AuthenticatedRoute from './components/Routes/AuthenticatedRoute';
 import UnauthenticatedRoute from './components/Routes/UnauthenticatedRoute';
 import PrivateRoute from './components/PrivateRouter/PrivateRouter';
 
-import { selectToken } from './store/selectors';
 import { thunk_getUser } from './store/user/thunk';
-import { thunk_getAuthors } from './store/authors/thunk';
-import { thunk_getCourses } from './store/courses/thunk';
 
 import './App.css';
 
 function App() {
 	const dispatch = useDispatch();
-	const token = useSelector(selectToken);
 
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
 			dispatch(thunk_getUser());
 		}
 	}, [dispatch]);
-
-	useEffect(() => {
-		if (token) {
-			dispatch(thunk_getAuthors());
-			dispatch(thunk_getCourses());
-		}
-	}, [dispatch, token]);
 
 	return (
 		<div className='App'>

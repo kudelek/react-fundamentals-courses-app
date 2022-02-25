@@ -7,8 +7,12 @@ import { Button } from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { getDuration } from '../../helpers/pipeDuration';
 import { selectAuthors, selectCourses } from '../../store/selectors';
-import { thunk_addCourse, thunk_updateCourse } from '../../store/courses/thunk';
-import { thunk_addAuthor } from '../../store/authors/thunk';
+import {
+	thunk_addCourse,
+	thunk_getCourses,
+	thunk_updateCourse,
+} from '../../store/courses/thunk';
+import { thunk_addAuthor, thunk_getAuthors } from '../../store/authors/thunk';
 
 import './CourseForm.css';
 
@@ -113,6 +117,11 @@ export default function CourseForm({ edit }) {
 		const value = e.target.value;
 		setCourse({ ...course, [name]: value, creationDate: creationDate });
 	}
+
+	useEffect(() => {
+		dispatch(thunk_getAuthors());
+		dispatch(thunk_getCourses());
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (edit && existingCourse) {

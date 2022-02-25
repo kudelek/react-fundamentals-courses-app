@@ -1,6 +1,7 @@
 import {
 	addCourse,
 	deleteCourse,
+	getCourse,
 	getCourses,
 	updateCourse,
 } from '../../services';
@@ -9,6 +10,13 @@ import { store_getCourses } from './actionCreators';
 export const thunk_getCourses = () => async (dispatch) => {
 	await getCourses().then((response) => {
 		dispatch(store_getCourses(response.data.result));
+	});
+};
+
+export const thunk_getCourse = (id, setIsLoading) => async (dispatch) => {
+	await getCourse(id).then((response) => {
+		dispatch(store_getCourses([response.data.result]));
+		setIsLoading(false);
 	});
 };
 

@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import { Button } from '../../common/Button/Button';
 import { selectCourses, selectUserRole } from '../../store/selectors';
+import { thunk_getAuthors } from '../../store/authors/thunk';
+import { thunk_getCourses } from '../../store/courses/thunk';
 
 import './Courses.css';
 
@@ -14,6 +16,7 @@ export default function Courses() {
 	const courses = useSelector(selectCourses);
 	const role = useSelector(selectUserRole);
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const filteredCourses = filterCourses(courses, searchQuery);
 
@@ -35,6 +38,11 @@ export default function Courses() {
 	function handleAddCourse() {
 		history.push('/courses/add');
 	}
+
+	useEffect(() => {
+		dispatch(thunk_getAuthors());
+		dispatch(thunk_getCourses());
+	}, [dispatch]);
 
 	return (
 		<>
