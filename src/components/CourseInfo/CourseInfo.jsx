@@ -8,8 +8,6 @@ import { selectAuthors, selectCourses } from '../../store/selectors';
 import { thunk_getCourse } from '../../store/courses/thunk';
 
 import './CourseInfo.css';
-import { store_getCourses } from '../../store/courses/actionCreators';
-import { getCourse } from '../../services';
 
 export default function CourseInfo() {
 	const { courseId } = useParams();
@@ -20,7 +18,7 @@ export default function CourseInfo() {
 
 	useEffect(() => {
 		dispatch(thunk_getCourse(courseId, setIsLoading));
-	}, []);
+	}, [courseId, dispatch]);
 
 	return (
 		<div className='main-container'>

@@ -10,7 +10,6 @@ import { selectAuthors, selectCourses } from '../../store/selectors';
 import {
 	thunk_addCourse,
 	thunk_getCourse,
-	thunk_getCourses,
 	thunk_updateCourse,
 } from '../../store/courses/thunk';
 import { thunk_addAuthor, thunk_getAuthors } from '../../store/authors/thunk';
