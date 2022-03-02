@@ -29,7 +29,7 @@ export default function CourseCard(props) {
 	}
 
 	return (
-		<section className='course-card' id={props.id}>
+		<section title='courseCard' className='course-card' id={props.id}>
 			<div className='content'>
 				<h1 className='content-title'>{props.title}</h1>
 				<div className='content-description'>{props.description}</div>
