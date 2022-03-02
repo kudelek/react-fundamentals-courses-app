@@ -1,3 +1,3 @@
 export function dateGenerator(date) {
-	return date.replaceAll('/', '.');
+	return date.replace(/\//g, '.');
 }
