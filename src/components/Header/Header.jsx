@@ -3,13 +3,14 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { Button } from '../../common/Button/Button';
 import { Logo } from './components/Logo/Logo';
-import { selectUserName } from '../../store/selectors';
+import { selectToken, selectUserName } from '../../store/selectors';
 import { thunk_logUserOut } from '../../store/user/thunk';
 
 import './Header.css';
 
 export default function Header() {
 	const userName = useSelector(selectUserName);
+	const token = useSelector(selectToken);
 	const history = useHistory();
 	const dispatch = useDispatch();
 
@@ -25,7 +26,7 @@ export default function Header() {
 					Courses
 				</Link>
 			</div>
-			{!!localStorage.getItem('token') && (
+			{!!token && (
 				<div className='right'>
 					<span className='right-item'>
 						{userName === null ? 'null' : userName}
