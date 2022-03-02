@@ -7,7 +7,7 @@ import coursesReducer from './courses/reducer';
 import userReducer from './user/reducer';
 
 const middleware = [ReduxThunk];
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
 	user: userReducer,
 	courses: coursesReducer,
 	authors: authorsReducer,
