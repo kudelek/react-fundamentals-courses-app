@@ -136,7 +136,7 @@ export default function CourseForm({ edit }) {
 	return isLoading ? (
 		'loading...'
 	) : (
-		<form title='courseForm' onSubmit={handleSubmitCourseForm}>
+		<form data-testid='course-form' onSubmit={handleSubmitCourseForm}>
 			<div className='title-and-create'>
 				<Input
 					name='title'

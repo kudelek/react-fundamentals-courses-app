@@ -53,6 +53,7 @@ export default function Courses() {
 				) : (
 					<div className='add'>
 						<Button
+							data-testid='add-course'
 							buttonText='Add new course'
 							className='add-button'
 							onClick={handleAddCourse}
@@ -61,7 +62,7 @@ export default function Courses() {
 				)}
 			</div>
 			{courses.length === 0 ? (
-				<div>There are no courses</div>
+				<div data-testid='no-courses'>There are no courses</div>
 			) : (
 				filteredCourses.map((course) =>
 					!course.id ? (

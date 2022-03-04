@@ -12,7 +12,9 @@ export default function Info(props) {
 					(m) => props.infoTitle.toLowerCase().slice(0, -2) === m
 				)
 			) ? (
-				<div className='info-content'>{props.infoContent}</div>
+				<div className='info-content' data-testid={props.testid}>
+					{props.infoContent}
+				</div>
 			) : (
 				<div className='info-content-multiline'>
 					{props.infoContent.split(', ').map((content) => (

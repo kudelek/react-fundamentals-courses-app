@@ -40,46 +40,46 @@ const mockedStore_NoC_A = {
 	dispatch: jest.fn(),
 };
 
-test('Courses should display amount of CourseCard equal length of courses array', () => {
-	render(
-		<Provider store={mockedStore_C_A}>
-			<Courses />
-		</Provider>
-	);
-	expect(screen.queryAllByTitle('courseCard')).toHaveLength(
-		mockedCoursesList.length
-	);
-});
+describe('Courses component tests', () => {
+	it('should display amount of CourseCard equal length of courses array', () => {
+		render(
+			<Provider store={mockedStore_C_A}>
+				<Courses />
+			</Provider>
+		);
+		expect(screen.queryAllByTestId('course-card')).toHaveLength(
+			mockedCoursesList.length
+		);
+	});
 
-test("Courses should display Empty container with 'There are no courses' text if courses array length is 0", () => {
-	render(
-		<Provider store={mockedStore_NoC_A}>
-			<Courses />
-		</Provider>
-	);
-	expect(screen.queryByText('There are no courses')).toBeInTheDocument();
-	expect(screen.queryAllByTitle('courseCard')).toHaveLength(0);
-});
+	it("should display Empty container with 'There are no courses' text if courses array length is 0", () => {
+		render(
+			<Provider store={mockedStore_NoC_A}>
+				<Courses />
+			</Provider>
+		);
+		expect(screen.queryByTestId('no-courses')).toBeInTheDocument();
+		expect(screen.queryAllByTestId('course-card')).toHaveLength(0);
+	});
 
-test("CourseForm should be showed after a click on a button 'Add new course'", () => {
-	render(
-		<Provider store={mockedStore_NoC_A}>
-			<Router>
-				<Switch>
-					<Courses exact path='/' />
-					<CourseForm exact path='/courses/add' />
-				</Switch>
-			</Router>
-		</Provider>
-	);
+	it("should redirect to CourseForm after a click on a button 'Add new course'", () => {
+		render(
+			<Provider store={mockedStore_NoC_A}>
+				<Router>
+					<Switch>
+						<Courses exact path='/' />
+						<CourseForm exact path='/courses/add' />
+					</Switch>
+				</Router>
+			</Provider>
+		);
 
-	expect(screen.queryByText('Add new course')).toBeInTheDocument();
-	expect(
-		screen.getByRole('button', { name: 'Add new course' })
-	).toBeInTheDocument();
-	fireEvent.click(screen.getByRole('button', { name: 'Add new course' }));
+		expect(screen.queryByTestId('add-course')).toBeInTheDocument();
+		expect(screen.getByTestId('add-course')).toBeInTheDocument();
+		fireEvent.click(screen.getByTestId('add-course'));
 
-	const form = screen.getByTitle('courseForm');
+		const form = screen.getByTestId('course-form');
 
-	expect(form).toBeInTheDocument();
+		expect(form).toBeInTheDocument();
+	});
 });

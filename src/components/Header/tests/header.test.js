@@ -19,7 +19,7 @@ const mockedStore = {
 	dispatch: jest.fn(),
 };
 
-test("Header should have logo and user's name", () => {
+test("should have logo and user's name", () => {
 	render(
 		<Router>
 			<Provider store={mockedStore}>
