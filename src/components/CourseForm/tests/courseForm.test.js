@@ -30,23 +30,10 @@ describe('CourseForm component tests', () => {
 				</Router>
 			</Provider>
 		);
-		const input = screen.queryByTestId('author-to-be-created');
-
 		expect(screen.queryAllByTestId('author')).toHaveLength(
 			mockedAuthorsList.length
 		);
 		expect(screen.queryAllByTestId('course-author')).toHaveLength(0);
-		expect(screen.queryByTestId('author-to-be-created').value).toMatch('');
-
-		fireEvent.input(input, {
-			target: { value: 'John Smith' },
-		});
-		expect(screen.queryByTestId('author-to-be-created').value).toMatch(
-			'John Smith'
-		);
-
-		fireEvent.click(screen.getByTestId('create-author'));
-		expect(mockedStore_C_A.dispatch).toHaveBeenCalledTimes(2);
 	});
 
 	it(`'Create author' button click should call dispatch`, () => {
