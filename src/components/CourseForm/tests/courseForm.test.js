@@ -21,9 +21,6 @@ const mockedStore_C_A = {
 	dispatch: jest.fn(),
 };
 
-// const spy = jest.spyOn(redux, 'useSelector');
-// spy.mockReturnValue(mockedState_C_A.getState().courses);
-
 describe('CourseForm component tests', () => {
 	it('should show authors lists (all and course authors)', () => {
 		render(
@@ -39,17 +36,41 @@ describe('CourseForm component tests', () => {
 			mockedAuthorsList.length
 		);
 		expect(screen.queryAllByTestId('course-author')).toHaveLength(0);
-		expect(screen.queryByTestId('author-to-be-created').innerHTML).toMatch('');
+		expect(screen.queryByTestId('author-to-be-created').value).toMatch('');
 
-		fireEvent.change(input, {
+		fireEvent.input(input, {
 			target: { value: 'John Smith' },
 		});
-		expect(screen.queryByTestId('author-to-be-created').innerHTML).toMatch(
+		expect(screen.queryByTestId('author-to-be-created').value).toMatch(
 			'John Smith'
 		);
 
 		fireEvent.click(screen.getByTestId('create-author'));
-		expect(mockedStore_C_A.dispatch).toBeCalled();
+		expect(mockedStore_C_A.dispatch).toHaveBeenCalledTimes(2);
+	});
+
+	it(`'Create author' button click should call dispatch`, () => {
+		render(
+			<Provider store={mockedStore_C_A}>
+				<Router exact path='/courses/add'>
+					<CourseForm />
+				</Router>
+			</Provider>
+		);
+		const input = screen.queryByTestId('author-to-be-created');
+
+		expect(screen.queryByTestId('author-to-be-created').value).toMatch('');
+
+		fireEvent.input(input, {
+			target: { value: 'John Smith' },
+		});
+		expect(screen.queryByTestId('author-to-be-created').value).toMatch(
+			'John Smith'
+		);
+
+		expect(mockedStore_C_A.dispatch).toHaveBeenCalledTimes(1);
+		fireEvent.click(screen.getByTestId('create-author'));
+		expect(mockedStore_C_A.dispatch).toHaveBeenCalledTimes(2);
 	});
 
 	it(`'Add author' button click should add an author to course author list`, () => {
