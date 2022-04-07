@@ -1,4 +1,4 @@
-import { GET_COURSES } from './actionTypes';
+import { GET_COURSES, SAVE_COURSE } from './actionTypes';
 
 const coursesInitialState = [];
 
@@ -9,6 +9,9 @@ export default function coursesReducer(
 	switch (type) {
 		case GET_COURSES: {
 			return payload;
+		}
+		case SAVE_COURSE: {
+			return [...state, payload];
 		}
 		default:
 			return state;

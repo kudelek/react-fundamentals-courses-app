@@ -29,10 +29,14 @@ export default function CourseCard(props) {
 	}
 
 	return (
-		<section className='course-card' id={props.id}>
+		<section data-testid='course-card' className='course-card' id={props.id}>
 			<div className='content'>
-				<h1 className='content-title'>{props.title}</h1>
-				<div className='content-description'>{props.description}</div>
+				<h1 data-testid='title' className='content-title'>
+					{props.title}
+				</h1>
+				<div data-testid='description' className='content-description'>
+					{props.description}
+				</div>
 			</div>
 			<div className='info'>
 				<div className='info-list'>
@@ -41,7 +45,12 @@ export default function CourseCard(props) {
 						'duration',
 						'creationDate',
 					]).map(([title, content]) => (
-						<Info key={title} infoTitle={title} infoContent={content} />
+						<Info
+							testid={title.split(':', 1)[0].toLowerCase()}
+							key={title}
+							infoTitle={title}
+							infoContent={content}
+						/>
 					))}
 				</div>
 				<div className='course-buttons'>

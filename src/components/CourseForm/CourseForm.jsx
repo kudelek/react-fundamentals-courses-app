@@ -136,7 +136,7 @@ export default function CourseForm({ edit }) {
 	return isLoading ? (
 		'loading...'
 	) : (
-		<form onSubmit={handleSubmitCourseForm}>
+		<form data-testid='course-form' onSubmit={handleSubmitCourseForm}>
 			<div className='title-and-create'>
 				<Input
 					name='title'
@@ -175,6 +175,7 @@ export default function CourseForm({ edit }) {
 				<div className='create-author-and-duration'>
 					<h2>Add author</h2>
 					<Input
+						data-testid='author-to-be-created'
 						name='authorToBeCreated'
 						id='create-author-input'
 						className='create-author'
@@ -186,6 +187,7 @@ export default function CourseForm({ edit }) {
 						labelText='Author name'
 					/>
 					<Button
+						data-testid='create-author'
 						className='create-author-button'
 						buttonText='Create author'
 						onClick={handleCreateAuthor}
@@ -222,8 +224,11 @@ export default function CourseForm({ edit }) {
 										'loading...'
 									) : (
 										<div key={author.id} className='course-authors-add'>
-											<div className='course-author-name'>{author.name}</div>
+											<div className='course-author-name' data-testid='author'>
+												{author.name}
+											</div>
 											<Button
+												data-testid='add-course-author'
 												className='course-author-button'
 												buttonText='Add author'
 												onClick={(e) => handleAddAuthor(e, author)}
@@ -240,10 +245,14 @@ export default function CourseForm({ edit }) {
 						<>
 							{course.authors.map((author) => (
 								<div key={author} className='course-authors-delete'>
-									<div className='course-author-name'>
+									<div
+										className='course-author-name'
+										data-testid='course-author'
+									>
 										{authors.filter((a) => a.id === author)[0].name}
 									</div>
 									<Button
+										data-testid='remove-course-author'
 										className='course-author-button'
 										buttonText='Delete author'
 										onClick={(e) => handleDeleteAuthor(e, author)}
